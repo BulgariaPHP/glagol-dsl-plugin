@@ -1,0 +1,56 @@
+{
+  parserClass="com.glagol.parser.GlagolParser"
+  parserUtilClass="com.glagol.parser.GlagolParserUtil"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Glagol"
+  psiImplClassSuffix="Impl"
+  psiPackage="com.glagol.psi"
+  psiImplPackage="com.glagol.psi.impl"
+
+  elementTypeHolderClass="com.glagol.psi.GlagolTypes"
+  elementTypeClass="com.glagol.psi.GlagolElementType"
+  tokenTypeClass="com.glagol.psi.GlagolTokenType"
+
+  tokens = [
+    OP_EQ="="
+    SEMICOLON=";"
+    LEFT_BRACE="{"
+    RIGHT_BRACE="}"
+    LEFT_BRACKET="["
+    RIGHT_BRACKET="]"
+    LEFT_PAREN="("
+    RIGHT_PAREN=")"
+    EXTERNAL_START="<<"
+    EXTERNAL_END=">>"
+
+    DECL_MODULE="module"
+    DECL_ENTITY="entity"
+    DECL_VALUE="value"
+
+    TYPE_STRING="string"
+    TYPE_INT="int"
+    TYPE_BOOL="bool"
+    TYPE_FLOAT="float"
+
+    //space='regexp:\s+'
+    int="regexp:\d+"
+    number="regexp:\d+\.\d+"
+    boolean="regexp:true|false"
+    id="regexp:\w+"
+    string="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\\"|\\\'|\\)*\")"
+    line_comment="regexp://.*"
+    block_comment="regexp:/\*([^])*\*/"
+  ]
+}
+
+glagol ::= !<<eof>> 'module' id ';' declaration?
+
+private declaration ::= decl_type id '{' member* '}'
+private decl_type ::= 'entity' | 'value'
+
+private member ::= 'value' data_type id default_value? ';'
+private default_value ::= '=' literal
+private literal ::= number | string | int | boolean
+private data_type ::= 'int' | 'string' | 'bool' | 'float' | id
