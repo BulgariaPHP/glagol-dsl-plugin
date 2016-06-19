@@ -16,11 +16,20 @@ public class GlagolSyntaxHighlighter extends SyntaxHighlighterBase {
     public static final TextAttributesKey KEYWORD =
             createTextAttributesKey("KEYWORD", DefaultLanguageHighlighterColors.KEYWORD);
 
+    public static final TextAttributesKey ANNO_MARKUP =
+            createTextAttributesKey("ANNO_MARKUP", DefaultLanguageHighlighterColors.DOC_COMMENT_MARKUP);
+
+    public static final TextAttributesKey ANNO_TAG =
+            createTextAttributesKey("ANNO_TAG", DefaultLanguageHighlighterColors.DOC_COMMENT_MARKUP);
+
     public static final TextAttributesKey BRACES =
             createTextAttributesKey("BRACES", DefaultLanguageHighlighterColors.BRACES);
 
     public static final TextAttributesKey IDENTIFIER =
             createTextAttributesKey("IDENTIFIER", DefaultLanguageHighlighterColors.IDENTIFIER);
+
+    public static final TextAttributesKey REL_DIR =
+            createTextAttributesKey("REL_DIR", DefaultLanguageHighlighterColors.DOC_COMMENT_TAG_VALUE);
 
     public static final TextAttributesKey SEMICOLON =
             createTextAttributesKey("SEMICOLON", DefaultLanguageHighlighterColors.SEMICOLON);
@@ -37,16 +46,6 @@ public class GlagolSyntaxHighlighter extends SyntaxHighlighterBase {
     public static final TextAttributesKey BAD_CHARACTER =
             createTextAttributesKey("G_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER);
 
-    private static final TextAttributesKey[] BAD_CHAR_KEYS = new TextAttributesKey[]{BAD_CHARACTER};
-    private static final TextAttributesKey[] KEYWORD_KEYS = new TextAttributesKey[]{KEYWORD};
-    private static final TextAttributesKey[] IDENTIFIER_KEYS = new TextAttributesKey[]{IDENTIFIER};
-    private static final TextAttributesKey[] SEMICOLON_KEYS = new TextAttributesKey[]{SEMICOLON};
-    private static final TextAttributesKey[] STRING_KEYS = new TextAttributesKey[]{STRING};
-    private static final TextAttributesKey[] NUMBER_KEYS = new TextAttributesKey[]{NUMBER};
-    private static final TextAttributesKey[] OPERATION_SIGN_KEYS = new TextAttributesKey[]{OPERATION_SIGN};
-    private static final TextAttributesKey[] BRACES_KEYS = new TextAttributesKey[]{BRACES};
-    private static final TextAttributesKey[] EMPTY_KEYS = new TextAttributesKey[0];
-
     @NotNull
     @Override
     public Lexer getHighlightingLexer() {
@@ -58,29 +57,43 @@ public class GlagolSyntaxHighlighter extends SyntaxHighlighterBase {
     public TextAttributesKey[] getTokenHighlights(IElementType tokenType) {
         if (tokenType.equals(GlagolTypes.DECL_ENTITY) ||
             tokenType.equals(GlagolTypes.DECL_VALUE) ||
+            tokenType.equals(GlagolTypes.DECL_IMPORT) ||
+            tokenType.equals(GlagolTypes.DECL_IMPORT_FROM) ||
+            tokenType.equals(GlagolTypes.DECL_AS) ||
+            tokenType.equals(GlagolTypes.DECL_REL) ||
+            tokenType.equals(GlagolTypes.DECL_WITH) ||
             tokenType.equals(GlagolTypes.TYPE_BOOL) ||
             tokenType.equals(GlagolTypes.TYPE_FLOAT) ||
             tokenType.equals(GlagolTypes.TYPE_INT) ||
             tokenType.equals(GlagolTypes.TYPE_STRING) ||
+            tokenType.equals(GlagolTypes.ANNO_SPECIAL_VALUE) ||
             tokenType.equals(GlagolTypes.BOOLEAN) ||
             tokenType.equals(GlagolTypes.DECL_MODULE)) {
-            return KEYWORD_KEYS;
+            return pack(KEYWORD);
         } else if (tokenType.equals(GlagolTypes.LEFT_BRACE) || tokenType.equals(GlagolTypes.RIGHT_BRACE)) {
-            return BRACES_KEYS;
+            return pack(BRACES);
         } else if (tokenType.equals(GlagolTypes.ID)) {
-            return IDENTIFIER_KEYS;
+            return pack(IDENTIFIER);
         } else if (tokenType.equals(GlagolTypes.SEMICOLON)) {
-            return SEMICOLON_KEYS;
+            return pack(SEMICOLON);
         } else if (tokenType.equals(GlagolTypes.STRING)) {
-            return STRING_KEYS;
+            return pack(STRING);
         } else if (tokenType.equals(GlagolTypes.NUMBER) || tokenType.equals(GlagolTypes.INT)) {
-            return NUMBER_KEYS;
+            return pack(NUMBER);
         } else if (tokenType.equals(GlagolTypes.OP_EQ)) {
-            return OPERATION_SIGN_KEYS;
+            return pack(OPERATION_SIGN);
+        } else if (tokenType.equals(GlagolTypes.ANNO_TABLE) ||
+                    tokenType.equals(GlagolTypes.ANNO_FIELD) ||
+                    tokenType.equals(GlagolTypes.ANNO_INDEX)) {
+            return pack(ANNO_MARKUP);
+        } else if (tokenType.equals(GlagolTypes.REL_DIR)) {
+            return pack(REL_DIR);
+        } else if (tokenType.equals(GlagolTypes.ANNO_TAG)) {
+            return pack(ANNO_TAG);
         } else if (tokenType.equals(TokenType.BAD_CHARACTER)) {
-            return BAD_CHAR_KEYS;
+            return pack(BAD_CHARACTER);
         } else {
-            return EMPTY_KEYS;
+            return EMPTY;
         }
     }
 }

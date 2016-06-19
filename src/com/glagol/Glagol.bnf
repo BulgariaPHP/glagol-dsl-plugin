@@ -16,6 +16,9 @@
   tokens = [
     OP_EQ="="
     SEMICOLON=";"
+    SEMICOLON=";"
+    COLON=":"
+    COMMA=","
     LEFT_BRACE="{"
     RIGHT_BRACE="}"
     LEFT_BRACKET="["
@@ -28,29 +31,58 @@
     DECL_MODULE="module"
     DECL_ENTITY="entity"
     DECL_VALUE="value"
+    DECL_IMPORT="use"
+    DECL_IMPORT_FROM="from"
+    DECL_AS="as"
+    DECL_REL="relation"
+    DECL_WITH="with"
 
     TYPE_STRING="string"
     TYPE_INT="int"
     TYPE_BOOL="bool"
     TYPE_FLOAT="float"
 
+    ANNO_TABLE="@table"
+    ANNO_INDEX="@index"
+    ANNO_FIELD="@field"
+
     //space='regexp:\s+'
     int="regexp:\d+"
     number="regexp:\d+\.\d+"
+    anno_tag="regexp:name|sequence|type|size|column|key"
+    anno_special_value="primary"
     boolean="regexp:true|false"
-    id="regexp:\w+"
+    rel_dir="regexp:one|many"
+    id="regexp:(\\\w+|\w+)"
     string="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\\"|\\\'|\\)*\")"
     line_comment="regexp://.*"
     block_comment="regexp:/\*([^])*\*/"
   ]
 }
 
-glagol ::= !<<eof>> 'module' id ';' declaration?
+glagol ::= !<<eof>> 'module' id ';' import_artifact* declaration?
 
-private declaration ::= decl_type id '{' member* '}'
+private import_artifact ::= 'use' id decl_type ('from' id)? ('as' id)? ';'
+
+private declaration ::= (table_annotation | index_annotation)* decl_type id '{' member* '}'
 private decl_type ::= 'entity' | 'value'
 
-private member ::= 'value' data_type id default_value? ';'
+private index_annotation ::= '@index' '(' id ',' '{' fields_list '}' ')'
+private fields_list ::= (id ',')* id
+
+private field_annotation ::= '@field' '(' '{' pair_fields '}' ')'
+private pair_fields ::= (pair_field ",")* pair_field
+private pair_field ::= anno_tag ':' anno_literal
+
+private anno_literal ::= number | int | boolean | anno_special_value | data_type
+
+private table_annotation ::= '@table' '(' 'name' ':' string ')'
+
+private member ::= member_value | entity_relation
+private entity_relation ::= 'relation' rel_dir ':' rel_dir id 'as' id ('with' '{' access_tokens '}')? ';'
+private access_tokens ::= (access_token ',')* access_token
+private access_token ::= 'add' | 'get' | 'set' | 'clear' | 'reset'
+private member_value ::= field_annotation? 'value' data_type id default_value? ';'
 private default_value ::= '=' literal
 private literal ::= number | string | int | boolean
 private data_type ::= 'int' | 'string' | 'bool' | 'float' | id

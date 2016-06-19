@@ -24,8 +24,10 @@ WHITE_SPACE=({LINE_WS}|{EOL})+
 
 INT=[0-9]+
 NUMBER=[0-9]+\.[0-9]+
+ANNO_TAG=name|sequence|type|size|column|key
 BOOLEAN=true|false
-ID=[a-zA-Z_0-9]+
+REL_DIR=one|many
+ID=(\\[a-zA-Z_0-9]+|[a-zA-Z_0-9]+)
 STRING=('([^'\\]|\\.)*'|\"([^\"\\]|\\\"|\\'|\\)*\")
 LINE_COMMENT="//".*
 BLOCK_COMMENT="/"\*([^])*\*"/"
@@ -36,6 +38,8 @@ BLOCK_COMMENT="/"\*([^])*\*"/"
 
   "="                  { return OP_EQ; }
   ";"                  { return SEMICOLON; }
+  ":"                  { return COLON; }
+  ","                  { return COMMA; }
   "{"                  { return LEFT_BRACE; }
   "}"                  { return RIGHT_BRACE; }
   "["                  { return LEFT_BRACKET; }
@@ -47,14 +51,25 @@ BLOCK_COMMENT="/"\*([^])*\*"/"
   "module"             { return DECL_MODULE; }
   "entity"             { return DECL_ENTITY; }
   "value"              { return DECL_VALUE; }
+  "use"                { return DECL_IMPORT; }
+  "from"               { return DECL_IMPORT_FROM; }
+  "as"                 { return DECL_AS; }
+  "relation"           { return DECL_REL; }
+  "with"               { return DECL_WITH; }
   "string"             { return TYPE_STRING; }
   "int"                { return TYPE_INT; }
   "bool"               { return TYPE_BOOL; }
   "float"              { return TYPE_FLOAT; }
+  "@table"             { return ANNO_TABLE; }
+  "@index"             { return ANNO_INDEX; }
+  "@field"             { return ANNO_FIELD; }
+  "primary"            { return ANNO_SPECIAL_VALUE; }
 
   {INT}                { return INT; }
   {NUMBER}             { return NUMBER; }
+  {ANNO_TAG}           { return ANNO_TAG; }
   {BOOLEAN}            { return BOOLEAN; }
+  {REL_DIR}            { return REL_DIR; }
   {ID}                 { return ID; }
   {STRING}             { return STRING; }
   {LINE_COMMENT}       { return LINE_COMMENT; }

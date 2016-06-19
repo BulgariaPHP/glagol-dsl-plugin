@@ -28,6 +28,7 @@
     <fileTypeFactory implementation="com.glagol.GlagolFileTypeFactory"/>
     <lang.parserDefinition language="glagol" implementationClass="com.glagol.GlagolParserDefinition"/>
     <lang.syntaxHighlighterFactory language="glagol" implementationClass="com.glagol.GlagolSyntaxHighlighterFactory"/>
+    <lang.braceMatcher language="glagol" implementationClass="com.glagol.GlagolBraceMatcher"/>
   </extensions>
 
   <actions>

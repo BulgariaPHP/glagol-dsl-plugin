@@ -9,11 +9,23 @@ import com.glagol.psi.impl.*;
 public interface GlagolTypes {
 
 
+  IElementType ANNO_FIELD = new GlagolTokenType("@field");
+  IElementType ANNO_INDEX = new GlagolTokenType("@index");
+  IElementType ANNO_SPECIAL_VALUE = new GlagolTokenType("primary");
+  IElementType ANNO_TABLE = new GlagolTokenType("@table");
+  IElementType ANNO_TAG = new GlagolTokenType("anno_tag");
   IElementType BLOCK_COMMENT = new GlagolTokenType("block_comment");
   IElementType BOOLEAN = new GlagolTokenType("boolean");
+  IElementType COLON = new GlagolTokenType(":");
+  IElementType COMMA = new GlagolTokenType(",");
+  IElementType DECL_AS = new GlagolTokenType("as");
   IElementType DECL_ENTITY = new GlagolTokenType("entity");
+  IElementType DECL_IMPORT = new GlagolTokenType("use");
+  IElementType DECL_IMPORT_FROM = new GlagolTokenType("from");
   IElementType DECL_MODULE = new GlagolTokenType("module");
+  IElementType DECL_REL = new GlagolTokenType("relation");
   IElementType DECL_VALUE = new GlagolTokenType("value");
+  IElementType DECL_WITH = new GlagolTokenType("with");
   IElementType EXTERNAL_END = new GlagolTokenType(">>");
   IElementType EXTERNAL_START = new GlagolTokenType("<<");
   IElementType ID = new GlagolTokenType("id");
@@ -24,6 +36,7 @@ public interface GlagolTypes {
   IElementType LINE_COMMENT = new GlagolTokenType("line_comment");
   IElementType NUMBER = new GlagolTokenType("number");
   IElementType OP_EQ = new GlagolTokenType("=");
+  IElementType REL_DIR = new GlagolTokenType("rel_dir");
   IElementType RIGHT_BRACE = new GlagolTokenType("}");
   IElementType RIGHT_BRACKET = new GlagolTokenType("]");
   IElementType RIGHT_PAREN = new GlagolTokenType(")");
