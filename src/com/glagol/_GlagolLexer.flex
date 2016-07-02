@@ -22,12 +22,14 @@ EOL="\r"|"\n"|"\r\n"
 LINE_WS=[\ \t\f]
 WHITE_SPACE=({LINE_WS}|{EOL})+
 
+ALPHA=[:alpha:]+
 INT=[0-9]+
-NUMBER=[0-9]+\.[0-9]+
-ANNO_TAG=name|sequence|type|size|column|key
+DECIMAL=[0-9]+\.[0-9]+
+ARTIFACT_ID=[A-Z][a-zA-Z_0-9]*
+ACCESS_OPTION=add|set|get|reset|clear
 BOOLEAN=true|false
 REL_DIR=one|many
-ID=(\\[a-zA-Z_0-9]+|[a-zA-Z_0-9]+)
+ID=(\\[a-z][a-zA-Z_0-9]*|[a-z][a-zA-Z_0-9]*)
 STRING=('([^'\\]|\\.)*'|\"([^\"\\]|\\\"|\\'|\\)*\")
 LINE_COMMENT="//".*
 BLOCK_COMMENT="/"\*([^])*\*"/"
@@ -36,44 +38,42 @@ BLOCK_COMMENT="/"\*([^])*\*"/"
 <YYINITIAL> {
   {WHITE_SPACE}        { return com.intellij.psi.TokenType.WHITE_SPACE; }
 
-  "="                  { return OP_EQ; }
-  ";"                  { return SEMICOLON; }
-  ":"                  { return COLON; }
-  ","                  { return COMMA; }
-  "{"                  { return LEFT_BRACE; }
-  "}"                  { return RIGHT_BRACE; }
-  "["                  { return LEFT_BRACKET; }
-  "]"                  { return RIGHT_BRACKET; }
-  "("                  { return LEFT_PAREN; }
-  ")"                  { return RIGHT_PAREN; }
-  "<<"                 { return EXTERNAL_START; }
-  ">>"                 { return EXTERNAL_END; }
-  "module"             { return DECL_MODULE; }
-  "entity"             { return DECL_ENTITY; }
-  "value"              { return DECL_VALUE; }
-  "use"                { return DECL_IMPORT; }
-  "from"               { return DECL_IMPORT_FROM; }
-  "as"                 { return DECL_AS; }
-  "relation"           { return DECL_REL; }
-  "with"               { return DECL_WITH; }
-  "string"             { return TYPE_STRING; }
-  "int"                { return TYPE_INT; }
-  "bool"               { return TYPE_BOOL; }
-  "float"              { return TYPE_FLOAT; }
-  "@table"             { return ANNO_TABLE; }
-  "@index"             { return ANNO_INDEX; }
-  "@field"             { return ANNO_FIELD; }
-  "primary"            { return ANNO_SPECIAL_VALUE; }
+  "="                  { return G_OP_EQ; }
+  ";"                  { return G_SEMICOLON; }
+  ":"                  { return G_COLON; }
+  ","                  { return G_COMMA; }
+  "{"                  { return G_LEFT_BRACE; }
+  "}"                  { return G_RIGHT_BRACE; }
+  "["                  { return G_LEFT_BRACKET; }
+  "]"                  { return G_RIGHT_BRACKET; }
+  "("                  { return G_LEFT_PAREN; }
+  ")"                  { return G_RIGHT_PAREN; }
+  "@"                  { return G_AT; }
+  "module"             { return G_KW_MODULE; }
+  "entity"             { return G_KW_ENTITY; }
+  "value"              { return G_KW_VALUE; }
+  "use"                { return G_KW_IMPORT; }
+  "from"               { return G_KW_FROM; }
+  "as"                 { return G_KW_ALIAS; }
+  "relation"           { return G_KW_REL; }
+  "with"               { return G_KW_WITH; }
+  "primary"            { return G_KW_PRIMARY; }
+  "string"             { return G_TYPE_STRING; }
+  "int"                { return G_TYPE_INT; }
+  "bool"               { return G_TYPE_BOOL; }
+  "float"              { return G_TYPE_FLOAT; }
 
-  {INT}                { return INT; }
-  {NUMBER}             { return NUMBER; }
-  {ANNO_TAG}           { return ANNO_TAG; }
-  {BOOLEAN}            { return BOOLEAN; }
-  {REL_DIR}            { return REL_DIR; }
-  {ID}                 { return ID; }
-  {STRING}             { return STRING; }
-  {LINE_COMMENT}       { return LINE_COMMENT; }
-  {BLOCK_COMMENT}      { return BLOCK_COMMENT; }
+  {ALPHA}              { return G_ALPHA; }
+  {INT}                { return G_INT; }
+  {DECIMAL}            { return G_DECIMAL; }
+  {ARTIFACT_ID}        { return G_ARTIFACT_ID; }
+  {ACCESS_OPTION}      { return G_ACCESS_OPTION; }
+  {BOOLEAN}            { return G_BOOLEAN; }
+  {REL_DIR}            { return G_REL_DIR; }
+  {ID}                 { return G_ID; }
+  {STRING}             { return G_STRING; }
+  {LINE_COMMENT}       { return G_LINE_COMMENT; }
+  {BLOCK_COMMENT}      { return G_BLOCK_COMMENT; }
 
   [^] { return com.intellij.psi.TokenType.BAD_CHARACTER; }
 }

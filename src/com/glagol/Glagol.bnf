@@ -10,12 +10,12 @@
   psiImplPackage="com.glagol.psi.impl"
 
   elementTypeHolderClass="com.glagol.psi.GlagolTypes"
+  elementTypePrefix="G_"
   elementTypeClass="com.glagol.psi.GlagolElementType"
   tokenTypeClass="com.glagol.psi.GlagolTokenType"
 
   tokens = [
     OP_EQ="="
-    SEMICOLON=";"
     SEMICOLON=";"
     COLON=":"
     COMMA=","
@@ -25,64 +25,67 @@
     RIGHT_BRACKET="]"
     LEFT_PAREN="("
     RIGHT_PAREN=")"
-    EXTERNAL_START="<<"
-    EXTERNAL_END=">>"
+    AT="@"
 
-    DECL_MODULE="module"
-    DECL_ENTITY="entity"
-    DECL_VALUE="value"
-    DECL_IMPORT="use"
-    DECL_IMPORT_FROM="from"
-    DECL_AS="as"
-    DECL_REL="relation"
-    DECL_WITH="with"
+    KW_MODULE="module"
+    KW_ENTITY="entity"
+    KW_VALUE="value"
+    KW_IMPORT="use"
+    KW_FROM="from"
+    KW_ALIAS="as"
+    KW_REL="relation"
+    KW_WITH="with"
+    KW_PRIMARY="primary"
 
     TYPE_STRING="string"
     TYPE_INT="int"
     TYPE_BOOL="bool"
     TYPE_FLOAT="float"
 
-    ANNO_TABLE="@table"
-    ANNO_INDEX="@index"
-    ANNO_FIELD="@field"
-
-    //space='regexp:\s+'
+    alpha="regexp:[:alpha:]+"
     int="regexp:\d+"
-    number="regexp:\d+\.\d+"
-    anno_tag="regexp:name|sequence|type|size|column|key"
-    anno_special_value="primary"
+    decimal="regexp:\d+\.\d+"
+    artifact_id="regexp:[A-Z]\w*"
+    //anno_tag="regexp:name|sequence|type|size|column|key"
+    access_option="regexp:add|set|get|reset|clear"
     boolean="regexp:true|false"
     rel_dir="regexp:one|many"
-    id="regexp:(\\\w+|\w+)"
+    id="regexp:(\\[a-z]\w*|[a-z]\w*)"
     string="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\\"|\\\'|\\)*\")"
     line_comment="regexp://.*"
     block_comment="regexp:/\*([^])*\*/"
   ]
 }
 
-glagol ::= !<<eof>> 'module' id ';' import_artifact* declaration?
+root ::= !<<eof>> annotation* 'module' artifact_id ';' import_artifact* declaration?
 
-private import_artifact ::= 'use' id decl_type ('from' id)? ('as' id)? ';'
+private import_artifact ::= 'use' artifact_id decl_type ('from' artifact_id)? ('as' artifact_id)? ';'
+decl_type ::= 'entity' | 'value'
 
-private declaration ::= (table_annotation | index_annotation)* decl_type id '{' member* '}'
-private decl_type ::= 'entity' | 'value'
+declaration ::= annotation* decl_type artifact_id '{' member+ '}' {pin=4 recoverWhile=declaration_recover}
+private declaration_recover ::= !('entity' | 'module' | ',' | id)
+annotation ::= anno annotation_args?
 
-private index_annotation ::= '@index' '(' id ',' '{' fields_list '}' ')'
-private fields_list ::= (id ',')* id
+private annotation_args ::= '(' (annotation_arg ",")* annotation_arg ')' {pin=1}
+private annotation_arg ::= string | annotation_list | annotation_map
 
-private field_annotation ::= '@field' '(' '{' pair_fields '}' ')'
-private pair_fields ::= (pair_field ",")* pair_field
-private pair_field ::= anno_tag ':' anno_literal
+private annotation_list ::= '[' (annotation_arg ",")* annotation_arg ']' {pin=1}
 
-private anno_literal ::= number | int | boolean | anno_special_value | data_type
+private annotation_map ::= '{' (annotation_map_pair ",")* annotation_map_pair '}' {pin=1 recoverWhile="#auto"}
+private annotation_map_pair ::= id ':' annotation_literal
+private annotation_literal ::= decimal | int | boolean | 'primary' | string | data_type
 
-private table_annotation ::= '@table' '(' 'name' ':' string ')'
+anno ::= '@' id
 
-private member ::= member_value | entity_relation
-private entity_relation ::= 'relation' rel_dir ':' rel_dir id 'as' id ('with' '{' access_tokens '}')? ';'
-private access_tokens ::= (access_token ',')* access_token
-private access_token ::= 'add' | 'get' | 'set' | 'clear' | 'reset'
-private member_value ::= field_annotation? 'value' data_type id default_value? ';'
+member ::= member_value | entity_relation
+
+member_value ::= annotation? 'value' data_type var default_value? ';'
 private default_value ::= '=' literal
-private literal ::= number | string | int | boolean
-private data_type ::= 'int' | 'string' | 'bool' | 'float' | id
+private literal ::= decimal | string | int | boolean
+private data_type ::= 'int' | 'string' | 'bool' | 'float' | artifact_id
+
+private entity_relation ::= 'relation' rel_dir ':' rel_dir artifact_id 'as' var ('with' '{' access_tokens '}')? ';'
+private access_tokens ::= (access_token ',')* access_token
+private access_token ::= access_option
+
+var ::= id

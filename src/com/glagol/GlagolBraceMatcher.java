@@ -11,9 +11,9 @@ import org.jetbrains.annotations.Nullable;
 public class GlagolBraceMatcher implements PairedBraceMatcher {
 
     private static final BracePair[] PAIRS = new BracePair[]{
-            new BracePair(GlagolTypes.LEFT_BRACE, GlagolTypes.RIGHT_BRACE, false),
-            new BracePair(GlagolTypes.LEFT_BRACKET, GlagolTypes.RIGHT_BRACKET, false),
-            new BracePair(GlagolTypes.LEFT_PAREN, GlagolTypes.RIGHT_PAREN, false)
+            new BracePair(GlagolTypes.G_LEFT_BRACE, GlagolTypes.G_RIGHT_BRACE, false),
+            new BracePair(GlagolTypes.G_LEFT_BRACKET, GlagolTypes.G_RIGHT_BRACKET, false),
+            new BracePair(GlagolTypes.G_LEFT_PAREN, GlagolTypes.G_RIGHT_PAREN, false)
     };
 
     @Override

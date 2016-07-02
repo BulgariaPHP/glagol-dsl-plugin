@@ -29,6 +29,9 @@
     <lang.parserDefinition language="glagol" implementationClass="com.glagol.GlagolParserDefinition"/>
     <lang.syntaxHighlighterFactory language="glagol" implementationClass="com.glagol.GlagolSyntaxHighlighterFactory"/>
     <lang.braceMatcher language="glagol" implementationClass="com.glagol.GlagolBraceMatcher"/>
+    <annotator language="glagol" implementationClass="com.glagol.annotator.VariableAnnotator"/>
+    <annotator language="glagol" implementationClass="com.glagol.annotator.AnnotationAnnotator"/>
+    <completion.contributor language="glagol" implementationClass="com.glagol.contributor.AnnotationCompletionContributor" id="keywordsCompletion"/>
   </extensions>
 
   <actions>

@@ -8,92 +8,43 @@ import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
 import com.glagol.psi.GlagolTypes;
 import org.jetbrains.annotations.NotNull;
+import java.util.HashMap;
+import java.util.Map;
 
-import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey;
+import static com.intellij.openapi.editor.DefaultLanguageHighlighterColors.*;
 
 public class GlagolSyntaxHighlighter extends SyntaxHighlighterBase {
+    private static final Map<IElementType, TextAttributesKey> ATTRIBUTES = new HashMap<IElementType, TextAttributesKey>();
 
-    public static final TextAttributesKey KEYWORD =
-            createTextAttributesKey("KEYWORD", DefaultLanguageHighlighterColors.KEYWORD);
+    static {
+        fillMap(ATTRIBUTES, LINE_COMMENT, GlagolTypes.G_LINE_COMMENT);
+        fillMap(ATTRIBUTES, BLOCK_COMMENT, GlagolTypes.G_BLOCK_COMMENT);
+        fillMap(ATTRIBUTES, PARENTHESES, GlagolTypes.G_LEFT_PAREN, GlagolTypes.G_RIGHT_PAREN);
+        fillMap(ATTRIBUTES, BRACES, GlagolTypes.G_LEFT_BRACE, GlagolTypes.G_RIGHT_BRACE);
+        fillMap(ATTRIBUTES, BRACKETS, GlagolTypes.G_LEFT_BRACKET, GlagolTypes.G_RIGHT_BRACKET);
+        fillMap(ATTRIBUTES, HighlighterColors.BAD_CHARACTER, TokenType.BAD_CHARACTER);
+        fillMap(ATTRIBUTES, IDENTIFIER, GlagolTypes.G_ID);
+        fillMap(ATTRIBUTES, COMMA, GlagolTypes.G_COLON, GlagolTypes.G_COMMA);
+        fillMap(ATTRIBUTES, SEMICOLON, GlagolTypes.G_SEMICOLON);
+        fillMap(ATTRIBUTES, COMMA, GlagolTypes.G_COMMA);
+        fillMap(ATTRIBUTES, METADATA, GlagolTypes.G_ACCESS_OPTION, GlagolTypes.G_REL_DIR);
+        fillMap(ATTRIBUTES, GlagolParserDefinition.KEYWORDS, KEYWORD);
+        fillMap(ATTRIBUTES, GlagolParserDefinition.DATA_TYPES, KEYWORD);
+        fillMap(ATTRIBUTES, GlagolParserDefinition.OPERATORS, OPERATION_SIGN);
+        fillMap(ATTRIBUTES, GlagolParserDefinition.NUMBERS, NUMBER);
+        fillMap(ATTRIBUTES, STRING, GlagolTypes.G_STRING);
+        fillMap(ATTRIBUTES, IDENTIFIER, GlagolTypes.G_ARTIFACT_ID);
+        fillMap(ATTRIBUTES, IDENTIFIER, GlagolTypes.G_ARTIFACT_ID);
+    }
 
-    public static final TextAttributesKey ANNO_MARKUP =
-            createTextAttributesKey("ANNO_MARKUP", DefaultLanguageHighlighterColors.DOC_COMMENT_MARKUP);
-
-    public static final TextAttributesKey ANNO_TAG =
-            createTextAttributesKey("ANNO_TAG", DefaultLanguageHighlighterColors.DOC_COMMENT_MARKUP);
-
-    public static final TextAttributesKey BRACES =
-            createTextAttributesKey("BRACES", DefaultLanguageHighlighterColors.BRACES);
-
-    public static final TextAttributesKey IDENTIFIER =
-            createTextAttributesKey("IDENTIFIER", DefaultLanguageHighlighterColors.IDENTIFIER);
-
-    public static final TextAttributesKey REL_DIR =
-            createTextAttributesKey("REL_DIR", DefaultLanguageHighlighterColors.DOC_COMMENT_TAG_VALUE);
-
-    public static final TextAttributesKey SEMICOLON =
-            createTextAttributesKey("SEMICOLON", DefaultLanguageHighlighterColors.SEMICOLON);
-
-    public static final TextAttributesKey STRING =
-            createTextAttributesKey("G_STRING", DefaultLanguageHighlighterColors.STRING);
-
-    public static final TextAttributesKey NUMBER =
-            createTextAttributesKey("G_NUMBER", DefaultLanguageHighlighterColors.NUMBER);
-
-    public static final TextAttributesKey OPERATION_SIGN =
-            createTextAttributesKey("G_OPERATION_SIGN", DefaultLanguageHighlighterColors.OPERATION_SIGN);
-
-    public static final TextAttributesKey BAD_CHARACTER =
-            createTextAttributesKey("G_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER);
+    @NotNull
+    public TextAttributesKey[] getTokenHighlights(IElementType tokenType) {
+        return pack(ATTRIBUTES.get(tokenType));
+    }
 
     @NotNull
     @Override
     public Lexer getHighlightingLexer() {
         return new GlagolFlexAdapter();
-    }
-
-    @NotNull
-    @Override
-    public TextAttributesKey[] getTokenHighlights(IElementType tokenType) {
-        if (tokenType.equals(GlagolTypes.DECL_ENTITY) ||
-            tokenType.equals(GlagolTypes.DECL_VALUE) ||
-            tokenType.equals(GlagolTypes.DECL_IMPORT) ||
-            tokenType.equals(GlagolTypes.DECL_IMPORT_FROM) ||
-            tokenType.equals(GlagolTypes.DECL_AS) ||
-            tokenType.equals(GlagolTypes.DECL_REL) ||
-            tokenType.equals(GlagolTypes.DECL_WITH) ||
-            tokenType.equals(GlagolTypes.TYPE_BOOL) ||
-            tokenType.equals(GlagolTypes.TYPE_FLOAT) ||
-            tokenType.equals(GlagolTypes.TYPE_INT) ||
-            tokenType.equals(GlagolTypes.TYPE_STRING) ||
-            tokenType.equals(GlagolTypes.ANNO_SPECIAL_VALUE) ||
-            tokenType.equals(GlagolTypes.BOOLEAN) ||
-            tokenType.equals(GlagolTypes.DECL_MODULE)) {
-            return pack(KEYWORD);
-        } else if (tokenType.equals(GlagolTypes.LEFT_BRACE) || tokenType.equals(GlagolTypes.RIGHT_BRACE)) {
-            return pack(BRACES);
-        } else if (tokenType.equals(GlagolTypes.ID)) {
-            return pack(IDENTIFIER);
-        } else if (tokenType.equals(GlagolTypes.SEMICOLON)) {
-            return pack(SEMICOLON);
-        } else if (tokenType.equals(GlagolTypes.STRING)) {
-            return pack(STRING);
-        } else if (tokenType.equals(GlagolTypes.NUMBER) || tokenType.equals(GlagolTypes.INT)) {
-            return pack(NUMBER);
-        } else if (tokenType.equals(GlagolTypes.OP_EQ)) {
-            return pack(OPERATION_SIGN);
-        } else if (tokenType.equals(GlagolTypes.ANNO_TABLE) ||
-                    tokenType.equals(GlagolTypes.ANNO_FIELD) ||
-                    tokenType.equals(GlagolTypes.ANNO_INDEX)) {
-            return pack(ANNO_MARKUP);
-        } else if (tokenType.equals(GlagolTypes.REL_DIR)) {
-            return pack(REL_DIR);
-        } else if (tokenType.equals(GlagolTypes.ANNO_TAG)) {
-            return pack(ANNO_TAG);
-        } else if (tokenType.equals(TokenType.BAD_CHARACTER)) {
-            return pack(BAD_CHARACTER);
-        } else {
-            return EMPTY;
-        }
     }
 }

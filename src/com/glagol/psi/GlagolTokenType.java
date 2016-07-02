@@ -9,9 +9,4 @@ public class GlagolTokenType extends IElementType {
     public GlagolTokenType(@NotNull @NonNls String debugName) {
         super(debugName, GlagolLanguage.INSTANCE);
     }
-
-    @Override
-    public String toString() {
-        return "GlagolTokenType." + super.toString();
-    }
 }
