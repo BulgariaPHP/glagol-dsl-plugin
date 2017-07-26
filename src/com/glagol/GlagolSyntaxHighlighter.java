@@ -27,14 +27,13 @@ public class GlagolSyntaxHighlighter extends SyntaxHighlighterBase {
         fillMap(ATTRIBUTES, COMMA, GlagolTypes.G_COLON, GlagolTypes.G_COMMA);
         fillMap(ATTRIBUTES, SEMICOLON, GlagolTypes.G_SEMICOLON);
         fillMap(ATTRIBUTES, COMMA, GlagolTypes.G_COMMA);
-        fillMap(ATTRIBUTES, METADATA, GlagolTypes.G_ACCESS_OPTION, GlagolTypes.G_REL_DIR);
         fillMap(ATTRIBUTES, GlagolParserDefinition.KEYWORDS, KEYWORD);
         fillMap(ATTRIBUTES, GlagolParserDefinition.DATA_TYPES, KEYWORD);
         fillMap(ATTRIBUTES, GlagolParserDefinition.OPERATORS, OPERATION_SIGN);
         fillMap(ATTRIBUTES, GlagolParserDefinition.NUMBERS, NUMBER);
         fillMap(ATTRIBUTES, STRING, GlagolTypes.G_STRING);
-        fillMap(ATTRIBUTES, IDENTIFIER, GlagolTypes.G_ARTIFACT_ID);
-        fillMap(ATTRIBUTES, IDENTIFIER, GlagolTypes.G_ARTIFACT_ID);
+        fillMap(ATTRIBUTES, IDENTIFIER, GlagolTypes.G_SYMBOL_NAME);
+        fillMap(ATTRIBUTES, IDENTIFIER, GlagolTypes.G_SYMBOL_NAME);
     }
 
     @NotNull

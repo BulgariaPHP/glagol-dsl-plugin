@@ -14,10 +14,13 @@
   elementTypeClass="com.glagol.psi.GlagolElementType"
   tokenTypeClass="com.glagol.psi.GlagolTokenType"
 
+  extends(".*type")=type
+
   tokens = [
     OP_EQ="="
     SEMICOLON=";"
     COLON=":"
+    DOUBLE_COLON="::"
     COMMA=","
     LEFT_BRACE="{"
     RIGHT_BRACE="}"
@@ -26,66 +29,90 @@
     LEFT_PAREN="("
     RIGHT_PAREN=")"
     AT="@"
+    TYPED_LIST="[]"
 
-    KW_MODULE="module"
+    LT="<"
+    GT=">"
+
+    KW_NS="namespace"
     KW_ENTITY="entity"
     KW_VALUE="value"
-    KW_IMPORT="use"
-    KW_FROM="from"
+    KW_REPOSITORY="repository"
+    KW_IMPORT="import"
     KW_ALIAS="as"
     KW_REL="relation"
-    KW_WITH="with"
+    KW_GET="get"
+    KW_SELFIE="selfie"
+    KW_NEW="new"
     KW_PRIMARY="primary"
 
     TYPE_STRING="string"
     TYPE_INT="int"
-    TYPE_BOOL="bool"
+    TYPE_BOOL="regexp:bool|boolean"
     TYPE_FLOAT="float"
+    TYPE_VOID="void"
 
-    alpha="regexp:[:alpha:]+"
     int="regexp:\d+"
     decimal="regexp:\d+\.\d+"
-    artifact_id="regexp:[A-Z]\w*"
-    //anno_tag="regexp:name|sequence|type|size|column|key"
-    access_option="regexp:add|set|get|reset|clear"
+    symbol_name="regexp:[A-Z]\w*"
     boolean="regexp:true|false"
     rel_dir="regexp:one|many"
-    id="regexp:(\\[a-z]\w*|[a-z]\w*)"
+    id="regexp:[a-z][a-zA-Z]*"
     string="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\\"|\\\'|\\)*\")"
     line_comment="regexp://.*"
     block_comment="regexp:/\*([^])*\*/"
   ]
 }
 
-root ::= !<<eof>> annotation* 'module' artifact_id ';' import_artifact* declaration?
+root ::= !<<eof>> annotation* 'namespace' qualified_name import_artifact* declaration?
 
-private import_artifact ::= 'use' artifact_id decl_type ('from' artifact_id)? ('as' artifact_id)? ';'
-decl_type ::= 'entity' | 'value'
+qualified_name ::= symbol_name ('::' symbol_name)*
 
-declaration ::= annotation* decl_type artifact_id '{' member+ '}' {pin=4 recoverWhile=declaration_recover}
-private declaration_recover ::= !('entity' | 'module' | ',' | id)
-annotation ::= anno annotation_args?
+import_artifact ::= 'import' qualified_name ('as' symbol_name)? ';'
 
-private annotation_args ::= '(' (annotation_arg ",")* annotation_arg ')' {pin=1}
-private annotation_arg ::= string | annotation_list | annotation_map
+declaration ::= annotation* (decl_entity | decl_value)
 
-private annotation_list ::= '[' (annotation_arg ",")* annotation_arg ']' {pin=1}
+decl_entity ::= 'entity' symbol_name '{' member* '}'
+decl_value ::= 'value' symbol_name '{' member* '}'
 
-private annotation_map ::= '{' (annotation_map_pair ",")* annotation_map_pair '}' {pin=1 recoverWhile="#auto"}
-private annotation_map_pair ::= id ':' annotation_literal
-private annotation_literal ::= decimal | int | boolean | 'primary' | string | data_type
+annotation ::= '@' id '=' annotation_arg | '@' id '(' annotation_arg_sequence ')'| '@' id
+private annotation_arg ::= literal | annotation_arg_list | annotation_arg_map
+private annotation_arg_list ::= '[' annotation_arg_sequence? ']'
+private annotation_arg_sequence ::= (annotation_arg ',')* annotation_arg
+private annotation_arg_map ::= '[' ((annotation_arg_pair ',')* annotation_arg_pair)? ']'
+private annotation_arg_pair ::= annotation_arg ':' annotation_arg
 
-anno ::= '@' id
+member ::= annotation* (property | constructor)
 
-member ::= member_value | entity_relation
+property ::= type id ('=' property_default_value)? ';'
+property_default_value ::= default_value
 
-member_value ::= annotation? 'value' data_type var default_value? ';'
-private default_value ::= '=' literal
-private literal ::= decimal | string | int | boolean
-private data_type ::= 'int' | 'string' | 'bool' | 'float' | artifact_id
+constructor ::= symbol_name '(' abstract_parameters? ')' '{' '}'
 
-private entity_relation ::= 'relation' rel_dir ':' rel_dir artifact_id 'as' var ('with' '{' access_tokens '}')? ';'
-private access_tokens ::= (access_token ',')* access_token
-private access_token ::= access_option
+private abstract_parameters ::= (abstract_parameter ',')* abstract_parameter
+private abstract_parameter ::= annotation* parameter
+private parameter ::= type id ('=' default_value)?
 
-var ::= id
+default_value ::= literal | dv_list | get | new
+
+dv_list ::= '[' dv_sequence? ']'
+dv_sequence ::= (default_value ',')* default_value
+
+literal ::= string | int | decimal | boolean
+
+get ::= 'get' type
+new ::= 'new' artifact_type '(' dv_sequence? ')'
+
+type ::= scalar_type
+       | list_type
+       | map_type
+       | repository_type
+       | artifact_type
+       | selfie_type
+
+selfie_type ::= 'selfie'
+scalar_type ::= TYPE_BOOL | TYPE_FLOAT | TYPE_INT | TYPE_STRING | TYPE_VOID
+list_type ::= type '[]'
+map_type ::= '{' type ',' type '}'
+repository_type ::= 'repository' '<' symbol_name '>'
+artifact_type ::= symbol_name

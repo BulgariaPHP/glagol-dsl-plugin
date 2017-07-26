@@ -21,10 +21,10 @@ public class GlagolParserDefinition implements ParserDefinition {
     public static final TokenSet WHITE_SPACES = TokenSet.create(TokenType.WHITE_SPACE);
     public static final TokenSet COMMENTS = TokenSet.create(GlagolTypes.G_LINE_COMMENT, GlagolTypes.G_BLOCK_COMMENT);
     public static final TokenSet KEYWORDS = TokenSet.create(
-            GlagolTypes.G_KW_ALIAS, GlagolTypes.G_KW_ENTITY, GlagolTypes.G_KW_FROM,
-            GlagolTypes.G_KW_IMPORT, GlagolTypes.G_KW_MODULE, GlagolTypes.G_KW_PRIMARY,
-            GlagolTypes.G_KW_REL, GlagolTypes.G_KW_WITH, GlagolTypes.G_KW_VALUE,
-            GlagolTypes.G_BOOLEAN
+            GlagolTypes.G_KW_ALIAS, GlagolTypes.G_KW_ENTITY, GlagolTypes.G_KW_SELFIE,
+            GlagolTypes.G_KW_IMPORT, GlagolTypes.G_KW_NS, GlagolTypes.G_KW_PRIMARY,
+            GlagolTypes.G_KW_REL, GlagolTypes.G_KW_GET, GlagolTypes.G_KW_VALUE,
+            GlagolTypes.G_BOOLEAN, GlagolTypes.G_KW_REPOSITORY, GlagolTypes.G_KW_NEW
     );
 
     public static final TokenSet OPERATORS = TokenSet.create(
