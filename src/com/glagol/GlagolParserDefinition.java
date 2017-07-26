@@ -24,7 +24,8 @@ public class GlagolParserDefinition implements ParserDefinition {
             GlagolTypes.G_KW_ALIAS, GlagolTypes.G_KW_ENTITY, GlagolTypes.G_KW_SELFIE,
             GlagolTypes.G_KW_IMPORT, GlagolTypes.G_KW_NS, GlagolTypes.G_KW_PRIMARY,
             GlagolTypes.G_KW_REL, GlagolTypes.G_KW_GET, GlagolTypes.G_KW_VALUE,
-            GlagolTypes.G_BOOLEAN, GlagolTypes.G_KW_REPOSITORY, GlagolTypes.G_KW_NEW
+            GlagolTypes.G_BOOLEAN, GlagolTypes.G_KW_REPOSITORY, GlagolTypes.G_KW_NEW,
+            GlagolTypes.G_KW_WHEN, GlagolTypes.G_KW_THIS
     );
 
     public static final TokenSet OPERATORS = TokenSet.create(

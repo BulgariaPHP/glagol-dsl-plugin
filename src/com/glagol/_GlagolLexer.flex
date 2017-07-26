@@ -53,8 +53,21 @@ BLOCK_COMMENT="/"\*([^])*\*"/"
   ")"                  { return G_RIGHT_PAREN; }
   "@"                  { return G_AT; }
   "[]"                 { return G_TYPED_LIST; }
+  "-"                  { return G_MINUS; }
+  "+"                  { return G_PLUS; }
+  "."                  { return G_DOT; }
+  "*"                  { return G_ASTERIX; }
+  "%"                  { return G_PERCENT; }
+  "/"                  { return G_SLASH; }
   "<"                  { return G_LT; }
   ">"                  { return G_GT; }
+  "<="                 { return G_LTE; }
+  ">="                 { return G_GTE; }
+  "=="                 { return G_EQ; }
+  "!="                 { return G_NON_EQ; }
+  "&&"                 { return G_AND; }
+  "||"                 { return G_OR; }
+  "?"                  { return G_QUESTION_MARK; }
   "namespace"          { return G_KW_NS; }
   "entity"             { return G_KW_ENTITY; }
   "value"              { return G_KW_VALUE; }
@@ -66,6 +79,8 @@ BLOCK_COMMENT="/"\*([^])*\*"/"
   "selfie"             { return G_KW_SELFIE; }
   "new"                { return G_KW_NEW; }
   "primary"            { return G_KW_PRIMARY; }
+  "when"               { return G_KW_WHEN; }
+  "this"               { return G_KW_THIS; }
   "string"             { return G_TYPE_STRING; }
   "int"                { return G_TYPE_INT; }
   "float"              { return G_TYPE_FLOAT; }

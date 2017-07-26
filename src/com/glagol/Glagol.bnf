@@ -15,6 +15,9 @@
   tokenTypeClass="com.glagol.psi.GlagolTokenType"
 
   extends(".*type")=type
+  extends(".*expr")=expr
+
+  consumeTokenMethod(".*_expr|expr")="consumeTokenFast"
 
   tokens = [
     OP_EQ="="
@@ -30,9 +33,21 @@
     RIGHT_PAREN=")"
     AT="@"
     TYPED_LIST="[]"
-
+    MINUS="-"
+    PLUS="+"
+    DOT="."
+    ASTERIX="*"
+    PERCENT="%"
+    SLASH="/"
     LT="<"
     GT=">"
+    LTE="<="
+    GTE=">="
+    EQ="=="
+    NON_EQ="!="
+    AND="&&"
+    OR="||"
+    QUESTION_MARK="?"
 
     KW_NS="namespace"
     KW_ENTITY="entity"
@@ -45,6 +60,8 @@
     KW_SELFIE="selfie"
     KW_NEW="new"
     KW_PRIMARY="primary"
+    KW_WHEN="when"
+    KW_THIS="this"
 
     TYPE_STRING="string"
     TYPE_INT="int"
@@ -87,7 +104,9 @@ member ::= annotation* (property | constructor)
 property ::= type id ('=' property_default_value)? ';'
 property_default_value ::= default_value
 
-constructor ::= symbol_name '(' abstract_parameters? ')' '{' '}'
+constructor ::= symbol_name '(' abstract_parameters? ')' '{' '}' guard?
+
+private guard ::= 'when' expr ';'
 
 private abstract_parameters ::= (abstract_parameter ',')* abstract_parameter
 private abstract_parameter ::= annotation* parameter
@@ -96,7 +115,7 @@ private parameter ::= type id ('=' default_value)?
 default_value ::= literal | dv_list | get | new
 
 dv_list ::= '[' dv_sequence? ']'
-dv_sequence ::= (default_value ',')* default_value
+dv_sequence ::= ((default_value ',')* default_value) | (default_value ',')+
 
 literal ::= string | int | decimal | boolean
 
@@ -116,3 +135,59 @@ list_type ::= type '[]'
 map_type ::= '{' type ',' type '}'
 repository_type ::= 'repository' '<' symbol_name '>'
 artifact_type ::= symbol_name
+
+expr ::= literal_expr
+       | list_expr
+       | map_expr
+       | negative_expr
+       | positive_expr
+       | invoke_group
+       | field_expr
+       | variable_expr
+       | new_expr
+       | bracket_expr
+       | this_expr
+       | mul_group
+       | add_group
+       | remainder_expr
+       | bin_rel_group
+       | bin_logic_group
+       | ternary_expr
+
+
+private bin_logic_group ::= and_expr | or_expr
+private bin_rel_group ::= lt_expr | lte_expr | gt_expr | gte_expr | eq_expr | non_eq_expr
+private add_group ::= plus_expr | minus_expr
+private mul_group ::= product_expr | division_expr
+private invoke_group ::= invoke_expr | invoke_final_expr
+
+ternary_expr ::= expr '?' expr ':' expr
+and_expr ::= expr '&&' expr
+or_expr ::= expr '||' expr
+lt_expr ::= expr '<' expr
+lte_expr ::= expr '<=' expr
+gt_expr ::= expr '>' expr
+gte_expr ::= expr '>=' expr
+eq_expr ::= expr '==' expr
+non_eq_expr ::= expr '!=' expr
+plus_expr ::= expr '+' expr
+minus_expr ::= expr '-' expr
+product_expr ::= expr '*' expr
+division_expr ::=  expr '/' expr
+remainder_expr ::= expr '%' expr
+literal_expr ::= literal
+list_expr ::= '[' list_seq_expr? ']'
+list_seq_expr ::= seq_expr | (expr ',')+
+seq_expr ::= (expr ',')* expr
+map_expr ::= '{' map_seq_expr? '}'
+map_seq_expr ::= ((map_pair_expr ',')* map_pair_expr) | (map_pair_expr ',')+
+map_pair_expr ::= expr ':' expr
+negative_expr ::= '-' expr
+positive_expr ::= '+'
+invoke_expr ::= expr '.' invoke_final_expr
+invoke_final_expr ::= id '(' seq_expr? ')'
+field_expr ::= expr '.' id
+variable_expr ::= id
+new_expr ::= 'new' symbol_name '(' seq_expr? ')'
+bracket_expr ::= '(' expr ')'
+this_expr ::= 'this'
