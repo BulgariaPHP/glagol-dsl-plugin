@@ -74,6 +74,11 @@
     KW_CONTINUE="continue"
     KW_PRIVATE="private"
     KW_PUBLIC="public"
+    KW_REST="rest"
+    KW_JSON_API="json-api"
+    KW_CONTROLLER="controller"
+    KW_SERVICE="service"
+    KW_UTIL="util"
 
     TYPE_STRING="string"
     TYPE_INT="int"
@@ -99,10 +104,19 @@ qualified_name ::= symbol_name ('::' symbol_name)*
 
 import_artifact ::= 'import' qualified_name ('as' symbol_name)? ';'
 
-declaration ::= annotation* (decl_entity | decl_value)
+declaration ::= annotation* (decl_entity | decl_value | decl_repo | decl_controller | decl_util)
 
 decl_entity ::= 'entity' symbol_name '{' member* '}'
 decl_value ::= 'value' symbol_name '{' member* '}'
+decl_repo ::= 'repository' 'for' symbol_name '{' member* '}'
+decl_util ::= ('util' | 'service') symbol_name '{' member* '}'
+decl_controller ::= controller_type 'controller' route '{' member* '}'
+
+private controller_type ::= 'rest' | 'json-api'
+private route ::= '/' route_parts?
+private route_parts ::= (route_part '/')* route_part
+private route_part ::= id | route_placeholder
+private route_placeholder ::= ':' id
 
 annotation ::= '@' id '=' annotation_arg | '@' id '(' annotation_arg_sequence ')'| '@' id
 private annotation_arg ::= literal | annotation_arg_list | annotation_arg_map

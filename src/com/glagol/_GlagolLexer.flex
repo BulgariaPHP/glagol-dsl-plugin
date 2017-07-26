@@ -92,6 +92,11 @@ BLOCK_COMMENT="/"\*([^])*\*"/"
   "continue"           { return G_KW_CONTINUE; }
   "private"            { return G_KW_PRIVATE; }
   "public"             { return G_KW_PUBLIC; }
+  "rest"               { return G_KW_REST; }
+  "json-api"           { return G_KW_JSON_API; }
+  "controller"         { return G_KW_CONTROLLER; }
+  "service"            { return G_KW_SERVICE; }
+  "util"               { return G_KW_UTIL; }
   "string"             { return G_TYPE_STRING; }
   "int"                { return G_TYPE_INT; }
   "float"              { return G_TYPE_FLOAT; }
