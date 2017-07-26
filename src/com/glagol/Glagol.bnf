@@ -16,6 +16,7 @@
 
   extends(".*type")=type
   extends(".*expr")=expr
+  extends(".*stmt")=stmt
 
   consumeTokenMethod(".*_expr|expr")="consumeTokenFast"
 
@@ -62,6 +63,15 @@
     KW_PRIMARY="primary"
     KW_WHEN="when"
     KW_THIS="this"
+    KW_IF="if"
+    KW_ELSE="else"
+    KW_FOR="for"
+    KW_RETURN="return"
+    KW_PERSIST="persist"
+    KW_FLUSH="flush"
+    KW_REMOVE="remove"
+    KW_BREAK="break"
+    KW_CONTINUE="continue"
 
     TYPE_STRING="string"
     TYPE_INT="int"
@@ -104,7 +114,34 @@ member ::= annotation* (property | constructor)
 property ::= type id ('=' property_default_value)? ';'
 property_default_value ::= default_value
 
-constructor ::= symbol_name '(' abstract_parameters? ')' '{' '}' guard?
+constructor ::= symbol_name '(' abstract_parameters? ')' block_stmt guard?
+
+stmt ::= expr_stmt
+       | block_stmt
+       | if_stmt
+       | assign_stmt
+       | foreach_stmt
+       | non_assoc_group
+       | empty_stmt
+
+private non_assoc_group ::= return_stmt | persist_stmt | flush_stmt | remove_stmt | break_stmt | continue_stmt | declare_stmt
+
+empty_stmt ::= ';'
+declare_stmt ::= type id (declare_default_val | ';')
+private declare_default_val ::= ('=' (assign_stmt | expr_stmt))
+continue_stmt ::= 'continue' int? ';'
+break_stmt ::= 'break' int? ';'
+remove_stmt ::= 'remove' expr ';'
+flush_stmt ::= 'flush' expr? ';'
+persist_stmt ::= 'persist' expr? ';'
+return_stmt ::= 'return' expr? ';'
+
+expr_stmt ::= expr ';'
+block_stmt ::= '{' stmt* '}'
+if_stmt ::= 'if' '(' expr ')' stmt ('else' stmt)
+assign_stmt ::= expr '=' (assign_stmt | expr_stmt) {rightAssociative=true}
+foreach_stmt ::= 'for' '(' expr 'as' id (':' id) conditions? ')' stmt
+private conditions ::= (',' expr)+
 
 private guard ::= 'when' expr ';'
 

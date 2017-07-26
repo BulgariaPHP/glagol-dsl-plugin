@@ -81,6 +81,15 @@ BLOCK_COMMENT="/"\*([^])*\*"/"
   "primary"            { return G_KW_PRIMARY; }
   "when"               { return G_KW_WHEN; }
   "this"               { return G_KW_THIS; }
+  "if"                 { return G_KW_IF; }
+  "else"               { return G_KW_ELSE; }
+  "for"                { return G_KW_FOR; }
+  "return"             { return G_KW_RETURN; }
+  "persist"            { return G_KW_PERSIST; }
+  "flush"              { return G_KW_FLUSH; }
+  "remove"             { return G_KW_REMOVE; }
+  "break"              { return G_KW_BREAK; }
+  "continue"           { return G_KW_CONTINUE; }
   "string"             { return G_TYPE_STRING; }
   "int"                { return G_TYPE_INT; }
   "float"              { return G_TYPE_FLOAT; }
