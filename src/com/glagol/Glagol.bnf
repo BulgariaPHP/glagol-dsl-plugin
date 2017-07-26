@@ -111,7 +111,7 @@ private annotation_arg_sequence ::= (annotation_arg ',')* annotation_arg
 private annotation_arg_map ::= '[' ((annotation_arg_pair ',')* annotation_arg_pair)? ']'
 private annotation_arg_pair ::= annotation_arg ':' annotation_arg
 
-member ::= annotation* (property | constructor | method)
+member ::= annotation* (property | constructor | method | action)
 
 property ::= type id ('=' property_default_value)? ';'
 property_default_value ::= default_value
@@ -121,6 +121,11 @@ constructor ::= symbol_name '(' abstract_parameters? ')' block_stmt guard?
 method ::= (modifier type id '(' abstract_parameters? ')' block_stmt guard?)
          | (modifier type id '(' abstract_parameters? ')' '=' expr guard)
          | (modifier type id '(' abstract_parameters? ')' '=' expr ';')
+
+action ::= id ('(' abstract_parameters? ')')? action_body
+private action_body ::= action_body_expr | action_body_statement
+private action_body_statement ::= block_stmt
+private action_body_expr ::= '=' expr ';'
 
 private modifier ::= 'private' | 'public'
 
