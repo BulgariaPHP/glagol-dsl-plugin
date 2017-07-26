@@ -2,6 +2,7 @@ package com.glagol;
 
 import com.glagol.parser.GlagolParser;
 import com.glagol.psi.GlagolFile;
+import com.glagol.psi.GlagolType;
 import com.glagol.psi.GlagolTypes;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.Language;
@@ -28,7 +29,8 @@ public class GlagolParserDefinition implements ParserDefinition {
             GlagolTypes.G_KW_WHEN, GlagolTypes.G_KW_THIS, GlagolTypes.G_KW_IF, GlagolTypes.G_KW_ELSE,
             GlagolTypes.G_KW_FOR, GlagolTypes.G_KW_RETURN, GlagolTypes.G_KW_PERSIST,
             GlagolTypes.G_KW_FLUSH, GlagolTypes.G_KW_REMOVE, GlagolTypes.G_KW_BREAK,
-            GlagolTypes.G_KW_CONTINUE
+            GlagolTypes.G_KW_CONTINUE, GlagolTypes.G_KW_PUBLIC, GlagolTypes.G_KW_PRIVATE,
+            GlagolTypes.G_TYPE_VOID
     );
 
     public static final TokenSet OPERATORS = TokenSet.create(

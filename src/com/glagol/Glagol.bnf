@@ -72,6 +72,8 @@
     KW_REMOVE="remove"
     KW_BREAK="break"
     KW_CONTINUE="continue"
+    KW_PRIVATE="private"
+    KW_PUBLIC="public"
 
     TYPE_STRING="string"
     TYPE_INT="int"
@@ -109,12 +111,18 @@ private annotation_arg_sequence ::= (annotation_arg ',')* annotation_arg
 private annotation_arg_map ::= '[' ((annotation_arg_pair ',')* annotation_arg_pair)? ']'
 private annotation_arg_pair ::= annotation_arg ':' annotation_arg
 
-member ::= annotation* (property | constructor)
+member ::= annotation* (property | constructor | method)
 
 property ::= type id ('=' property_default_value)? ';'
 property_default_value ::= default_value
 
 constructor ::= symbol_name '(' abstract_parameters? ')' block_stmt guard?
+
+method ::= (modifier type id '(' abstract_parameters? ')' block_stmt guard?)
+         | (modifier type id '(' abstract_parameters? ')' '=' expr guard)
+         | (modifier type id '(' abstract_parameters? ')' '=' expr ';')
+
+private modifier ::= 'private' | 'public'
 
 stmt ::= expr_stmt
        | block_stmt
@@ -165,7 +173,9 @@ type ::= scalar_type
        | repository_type
        | artifact_type
        | selfie_type
+       | void_type
 
+void_type ::= 'void'
 selfie_type ::= 'selfie'
 scalar_type ::= TYPE_BOOL | TYPE_FLOAT | TYPE_INT | TYPE_STRING | TYPE_VOID
 list_type ::= type '[]'
