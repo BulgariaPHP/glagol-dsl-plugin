@@ -1,28 +1,20 @@
-<idea-plugin version="2">
+<idea-plugin>
   <id>com.glagol</id>
-  <name>Plugin display name here</name>
+  <name>Glagol DSL</name>
   <version>1.0</version>
-  <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+  <vendor email="joan.grigorov@gmail.com" url="http://glagol-dsl.github.io">Bulgaria PHP User Group</vendor>
 
   <description><![CDATA[
-      Enter short description for your plugin here.<br>
-      <em>most HTML tags may be used</em>
+      Syntax highlighting and language support for Glagol DSL
     ]]></description>
 
   <change-notes><![CDATA[
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>
+      Added syntax highlighting
     ]]>
   </change-notes>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
   <idea-version since-build="141.0"/>
-
-  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-       on how to target different products -->
-  <!-- uncomment to enable plugin in all products
-  <depends>com.intellij.modules.lang</depends>
-  -->
 
   <extensions defaultExtensionNs="com.intellij">
     <fileTypeFactory implementation="com.glagol.GlagolFileTypeFactory"/>
