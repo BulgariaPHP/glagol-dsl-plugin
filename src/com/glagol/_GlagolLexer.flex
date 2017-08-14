@@ -52,7 +52,6 @@ BLOCK_COMMENT="/"\*([^])*\*"/"
   "("                  { return G_LEFT_PAREN; }
   ")"                  { return G_RIGHT_PAREN; }
   "@"                  { return G_AT; }
-  "[]"                 { return G_TYPED_LIST; }
   "-"                  { return G_MINUS; }
   "+"                  { return G_PLUS; }
   "."                  { return G_DOT; }

@@ -33,7 +33,6 @@
     LEFT_PAREN="("
     RIGHT_PAREN=")"
     AT="@"
-    TYPED_LIST="[]"
     MINUS="-"
     PLUS="+"
     DOT="."
@@ -160,7 +159,7 @@ continue_stmt ::= 'continue' int? ';'
 break_stmt ::= 'break' int? ';'
 remove_stmt ::= 'remove' expr ';'
 flush_stmt ::= 'flush' expr? ';'
-persist_stmt ::= 'persist' expr? ';'
+persist_stmt ::= 'persist' expr ';'
 return_stmt ::= 'return' expr? ';'
 
 expr_stmt ::= expr ';'
@@ -176,10 +175,14 @@ private abstract_parameters ::= (abstract_parameter ',')* abstract_parameter
 private abstract_parameter ::= annotation* parameter
 private parameter ::= type id ('=' default_value)?
 
-default_value ::= literal | dv_list | get | new
+default_value ::= literal | dv_list | dv_map | get | new
 
 dv_list ::= '[' dv_sequence? ']'
 dv_sequence ::= ((default_value ',')* default_value) | (default_value ',')+
+
+dv_map ::= '{' dv_map_sequence? '}'
+dv_map_sequence ::= ((dv_map_pair ',')* dv_map_pair) | (dv_map_pair ',')+
+dv_map_pair ::= default_value ':' default_value
 
 literal ::= string | int | decimal | boolean
 
@@ -197,12 +200,13 @@ type ::= scalar_type
 void_type ::= 'void'
 selfie_type ::= 'selfie'
 scalar_type ::= TYPE_BOOL | TYPE_FLOAT | TYPE_INT | TYPE_STRING | TYPE_VOID
-list_type ::= type '[]'
+list_type ::= type '[' ']'
 map_type ::= '{' type ',' type '}'
 repository_type ::= 'repository' '<' symbol_name '>'
 artifact_type ::= symbol_name
 
-expr ::= literal_expr
+expr ::= bracket_expr
+       | literal_expr
        | list_expr
        | map_expr
        | negative_expr
@@ -211,7 +215,6 @@ expr ::= literal_expr
        | field_expr
        | variable_expr
        | new_expr
-       | bracket_expr
        | this_expr
        | mul_group
        | add_group

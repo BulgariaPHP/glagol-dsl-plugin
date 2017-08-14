@@ -16,6 +16,8 @@
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
   <idea-version since-build="141.0"/>
 
+  <depends>com.intellij.modules.platform</depends>
+
   <extensions defaultExtensionNs="com.intellij">
     <fileTypeFactory implementation="com.glagol.GlagolFileTypeFactory"/>
     <lang.parserDefinition language="glagol" implementationClass="com.glagol.GlagolParserDefinition"/>
