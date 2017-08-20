@@ -1,5 +1,5 @@
 <idea-plugin>
-  <id>org.bulgaria_php.glagol_dsl</id>
+  <id>com.glagol</id>
   <name>Glagol DSL</name>
   <version>1.1</version>
   <vendor email="joan.grigorov@gmail.com" url="http://glagol-dsl.github.io">Bulgaria PHP User Group</vendor>
