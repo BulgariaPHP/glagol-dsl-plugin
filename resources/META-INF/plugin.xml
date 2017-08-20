@@ -1,7 +1,7 @@
 <idea-plugin>
-  <id>com.glagol</id>
+  <id>org.bulgaria_php.glagol_dsl</id>
   <name>Glagol DSL</name>
-  <version>1.0</version>
+  <version>1.1</version>
   <vendor email="joan.grigorov@gmail.com" url="http://glagol-dsl.github.io">Bulgaria PHP User Group</vendor>
 
   <description><![CDATA[
@@ -9,6 +9,8 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      Added type casting grammar
+      Fixed platform installation bug
       Added syntax highlighting
     ]]>
   </change-notes>
