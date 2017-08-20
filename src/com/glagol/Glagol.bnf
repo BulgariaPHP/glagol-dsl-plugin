@@ -205,7 +205,8 @@ map_type ::= '{' type ',' type '}'
 repository_type ::= 'repository' '<' symbol_name '>'
 artifact_type ::= symbol_name
 
-expr ::= bracket_expr
+expr ::= cast_expr
+       | bracket_expr
        | literal_expr
        | list_expr
        | map_expr
@@ -260,3 +261,4 @@ variable_expr ::= id
 new_expr ::= 'new' symbol_name '(' seq_expr? ')'
 bracket_expr ::= '(' expr ')'
 this_expr ::= 'this'
+cast_expr ::= '(' type ')' expr
