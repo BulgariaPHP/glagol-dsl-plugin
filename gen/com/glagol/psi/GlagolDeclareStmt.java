@@ -13,6 +13,12 @@ public interface GlagolDeclareStmt extends GlagolStmt {
   @NotNull
   GlagolType getType();
 
+  @Nullable
+  PsiElement getOpEq();
+
+  @Nullable
+  PsiElement getSemicolon();
+
   @NotNull
   PsiElement getId();
 

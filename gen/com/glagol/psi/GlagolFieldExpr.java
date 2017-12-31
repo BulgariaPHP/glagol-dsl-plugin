@@ -11,6 +11,9 @@ public interface GlagolFieldExpr extends GlagolExpr {
   GlagolExpr getExpr();
 
   @NotNull
+  PsiElement getDot();
+
+  @NotNull
   PsiElement getId();
 
 }

@@ -37,4 +37,28 @@ public class GlagolIfStmtImpl extends GlagolStmtImpl implements GlagolIfStmt {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, GlagolStmt.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getKwElse() {
+    return findNotNullChildByType(G_KW_ELSE);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getKwIf() {
+    return findNotNullChildByType(G_KW_IF);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getLeftParen() {
+    return findNotNullChildByType(G_LEFT_PAREN);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getRightParen() {
+    return findNotNullChildByType(G_RIGHT_PAREN);
+  }
+
 }

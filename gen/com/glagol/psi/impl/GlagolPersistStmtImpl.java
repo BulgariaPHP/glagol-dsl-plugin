@@ -31,4 +31,16 @@ public class GlagolPersistStmtImpl extends GlagolStmtImpl implements GlagolPersi
     return findNotNullChildByClass(GlagolExpr.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getKwPersist() {
+    return findNotNullChildByType(G_KW_PERSIST);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getSemicolon() {
+    return findNotNullChildByType(G_SEMICOLON);
+  }
+
 }

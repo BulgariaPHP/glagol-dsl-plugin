@@ -31,4 +31,10 @@ public class GlagolInvokeExprImpl extends GlagolExprImpl implements GlagolInvoke
     return PsiTreeUtil.getChildrenOfTypeAsList(this, GlagolExpr.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getDot() {
+    return findNotNullChildByType(G_DOT);
+  }
+
 }

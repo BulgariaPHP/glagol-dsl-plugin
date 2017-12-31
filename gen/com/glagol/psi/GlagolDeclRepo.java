@@ -11,6 +11,18 @@ public interface GlagolDeclRepo extends PsiElement {
   List<GlagolMember> getMemberList();
 
   @NotNull
+  PsiElement getKwFor();
+
+  @NotNull
+  PsiElement getKwRepository();
+
+  @NotNull
+  PsiElement getLeftBrace();
+
+  @NotNull
+  PsiElement getRightBrace();
+
+  @NotNull
   PsiElement getSymbolName();
 
 }

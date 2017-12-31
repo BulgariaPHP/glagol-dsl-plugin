@@ -11,6 +11,15 @@ public interface GlagolImportArtifact extends PsiElement {
   GlagolQualifiedName getQualifiedName();
 
   @Nullable
+  PsiElement getKwAlias();
+
+  @NotNull
+  PsiElement getKwImport();
+
+  @NotNull
+  PsiElement getSemicolon();
+
+  @Nullable
   PsiElement getSymbolName();
 
 }

@@ -31,4 +31,16 @@ public class GlagolRemoveStmtImpl extends GlagolStmtImpl implements GlagolRemove
     return findNotNullChildByClass(GlagolExpr.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getKwRemove() {
+    return findNotNullChildByType(G_KW_REMOVE);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getSemicolon() {
+    return findNotNullChildByType(G_SEMICOLON);
+  }
+
 }

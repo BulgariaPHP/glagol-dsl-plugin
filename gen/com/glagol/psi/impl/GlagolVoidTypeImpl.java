@@ -25,4 +25,10 @@ public class GlagolVoidTypeImpl extends GlagolTypeImpl implements GlagolVoidType
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getTypeVoid() {
+    return findNotNullChildByType(G_TYPE_VOID);
+  }
+
 }

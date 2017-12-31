@@ -25,4 +25,10 @@ public class GlagolPositiveExprImpl extends GlagolExprImpl implements GlagolPosi
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getPlus() {
+    return findNotNullChildByType(G_PLUS);
+  }
+
 }

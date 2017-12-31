@@ -11,6 +11,30 @@ public interface GlagolAnnotation extends PsiElement {
   GlagolLiteral getLiteral();
 
   @NotNull
+  PsiElement getAt();
+
+  @Nullable
+  PsiElement getLeftBracket();
+
+  @Nullable
+  PsiElement getLeftParen();
+
+  @Nullable
+  PsiElement getOpEq();
+
+  @Nullable
+  PsiElement getRightBracket();
+
+  @Nullable
+  PsiElement getRightParen();
+
+  @NotNull
   PsiElement getId();
+
+  @NotNull
+  String getName();
+
+  @NotNull
+  boolean isAnnotation();
 
 }

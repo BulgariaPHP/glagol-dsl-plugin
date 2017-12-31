@@ -31,4 +31,10 @@ public class GlagolNegativeExprImpl extends GlagolExprImpl implements GlagolNega
     return findChildByClass(GlagolExpr.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getMinus() {
+    return findNotNullChildByType(G_MINUS);
+  }
+
 }

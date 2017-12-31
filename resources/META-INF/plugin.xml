@@ -26,6 +26,7 @@
     <lang.syntaxHighlighterFactory language="glagol" implementationClass="com.glagol.GlagolSyntaxHighlighterFactory"/>
     <lang.braceMatcher language="glagol" implementationClass="com.glagol.GlagolBraceMatcher"/>
     <completion.contributor language="glagol" implementationClass="com.glagol.contributor.AnnotationCompletionContributor" id="keywordsCompletion"/>
+    <annotator language="glagol" implementationClass="com.glagol.annotator.color.AnnotationColorizer"/>
   </extensions>
 
   <actions>

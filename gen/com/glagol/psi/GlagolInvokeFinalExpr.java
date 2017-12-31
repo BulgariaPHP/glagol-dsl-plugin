@@ -11,6 +11,12 @@ public interface GlagolInvokeFinalExpr extends GlagolExpr {
   GlagolExpr getExpr();
 
   @NotNull
+  PsiElement getLeftParen();
+
+  @NotNull
+  PsiElement getRightParen();
+
+  @NotNull
   PsiElement getId();
 
 }

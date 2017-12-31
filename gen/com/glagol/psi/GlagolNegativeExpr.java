@@ -10,4 +10,7 @@ public interface GlagolNegativeExpr extends GlagolExpr {
   @Nullable
   GlagolExpr getExpr();
 
+  @NotNull
+  PsiElement getMinus();
+
 }

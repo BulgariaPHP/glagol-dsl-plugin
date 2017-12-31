@@ -13,4 +13,16 @@ public interface GlagolIfStmt extends GlagolStmt {
   @NotNull
   List<GlagolStmt> getStmtList();
 
+  @NotNull
+  PsiElement getKwElse();
+
+  @NotNull
+  PsiElement getKwIf();
+
+  @NotNull
+  PsiElement getLeftParen();
+
+  @NotNull
+  PsiElement getRightParen();
+
 }

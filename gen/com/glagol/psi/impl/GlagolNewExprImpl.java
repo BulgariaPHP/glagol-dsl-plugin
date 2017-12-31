@@ -33,6 +33,24 @@ public class GlagolNewExprImpl extends GlagolExprImpl implements GlagolNewExpr {
 
   @Override
   @NotNull
+  public PsiElement getKwNew() {
+    return findNotNullChildByType(G_KW_NEW);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getLeftParen() {
+    return findNotNullChildByType(G_LEFT_PAREN);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getRightParen() {
+    return findNotNullChildByType(G_RIGHT_PAREN);
+  }
+
+  @Override
+  @NotNull
   public PsiElement getSymbolName() {
     return findNotNullChildByType(G_SYMBOL_NAME);
   }

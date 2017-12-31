@@ -10,4 +10,10 @@ public interface GlagolFlushStmt extends GlagolStmt {
   @Nullable
   GlagolExpr getExpr();
 
+  @NotNull
+  PsiElement getKwFlush();
+
+  @NotNull
+  PsiElement getSemicolon();
+
 }

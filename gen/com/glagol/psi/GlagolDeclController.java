@@ -10,4 +10,19 @@ public interface GlagolDeclController extends PsiElement {
   @NotNull
   List<GlagolMember> getMemberList();
 
+  @NotNull
+  PsiElement getKwController();
+
+  @Nullable
+  PsiElement getKwJsonApi();
+
+  @Nullable
+  PsiElement getKwRest();
+
+  @NotNull
+  PsiElement getLeftBrace();
+
+  @NotNull
+  PsiElement getRightBrace();
+
 }

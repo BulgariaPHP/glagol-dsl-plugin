@@ -10,4 +10,10 @@ public interface GlagolDvList extends PsiElement {
   @Nullable
   GlagolDvSequence getDvSequence();
 
+  @NotNull
+  PsiElement getLeftBracket();
+
+  @NotNull
+  PsiElement getRightBracket();
+
 }

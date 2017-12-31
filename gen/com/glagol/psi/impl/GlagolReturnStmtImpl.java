@@ -31,4 +31,16 @@ public class GlagolReturnStmtImpl extends GlagolStmtImpl implements GlagolReturn
     return findChildByClass(GlagolExpr.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getKwReturn() {
+    return findNotNullChildByType(G_KW_RETURN);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getSemicolon() {
+    return findNotNullChildByType(G_SEMICOLON);
+  }
+
 }

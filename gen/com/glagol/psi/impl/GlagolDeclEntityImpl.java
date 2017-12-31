@@ -8,10 +8,9 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.glagol.psi.GlagolTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.glagol.psi.*;
 
-public class GlagolDeclEntityImpl extends ASTWrapperPsiElement implements GlagolDeclEntity {
+public class GlagolDeclEntityImpl extends GlagolPsiElement implements GlagolDeclEntity {
 
   public GlagolDeclEntityImpl(ASTNode node) {
     super(node);
@@ -30,6 +29,24 @@ public class GlagolDeclEntityImpl extends ASTWrapperPsiElement implements Glagol
   @NotNull
   public List<GlagolMember> getMemberList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, GlagolMember.class);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getKwEntity() {
+    return findNotNullChildByType(G_KW_ENTITY);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getLeftBrace() {
+    return findNotNullChildByType(G_LEFT_BRACE);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getRightBrace() {
+    return findNotNullChildByType(G_RIGHT_BRACE);
   }
 
   @Override

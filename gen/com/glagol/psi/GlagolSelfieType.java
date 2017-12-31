@@ -7,4 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface GlagolSelfieType extends GlagolType {
 
+  @NotNull
+  PsiElement getKwSelfie();
+
 }

@@ -33,6 +33,12 @@ public class GlagolFieldExprImpl extends GlagolExprImpl implements GlagolFieldEx
 
   @Override
   @NotNull
+  public PsiElement getDot() {
+    return findNotNullChildByType(G_DOT);
+  }
+
+  @Override
+  @NotNull
   public PsiElement getId() {
     return findNotNullChildByType(G_ID);
   }

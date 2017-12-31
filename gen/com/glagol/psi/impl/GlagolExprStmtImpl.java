@@ -31,4 +31,10 @@ public class GlagolExprStmtImpl extends GlagolStmtImpl implements GlagolExprStmt
     return findNotNullChildByClass(GlagolExpr.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getSemicolon() {
+    return findNotNullChildByType(G_SEMICOLON);
+  }
+
 }

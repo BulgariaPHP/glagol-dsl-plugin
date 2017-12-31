@@ -10,4 +10,10 @@ public interface GlagolBlockStmt extends GlagolStmt {
   @NotNull
   List<GlagolStmt> getStmtList();
 
+  @NotNull
+  PsiElement getLeftBrace();
+
+  @NotNull
+  PsiElement getRightBrace();
+
 }

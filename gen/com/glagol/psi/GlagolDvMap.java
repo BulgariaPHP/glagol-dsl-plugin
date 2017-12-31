@@ -10,4 +10,10 @@ public interface GlagolDvMap extends PsiElement {
   @Nullable
   GlagolDvMapSequence getDvMapSequence();
 
+  @NotNull
+  PsiElement getLeftBrace();
+
+  @NotNull
+  PsiElement getRightBrace();
+
 }

@@ -10,4 +10,7 @@ public interface GlagolNonEqExpr extends GlagolExpr {
   @NotNull
   List<GlagolExpr> getExprList();
 
+  @NotNull
+  PsiElement getNonEq();
+
 }

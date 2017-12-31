@@ -25,4 +25,10 @@ public class GlagolThisExprImpl extends GlagolExprImpl implements GlagolThisExpr
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getKwThis() {
+    return findNotNullChildByType(G_KW_THIS);
+  }
+
 }

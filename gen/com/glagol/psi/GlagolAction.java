@@ -22,4 +22,13 @@ public interface GlagolAction extends PsiElement {
   @NotNull
   List<GlagolType> getTypeList();
 
+  @Nullable
+  PsiElement getLeftParen();
+
+  @Nullable
+  PsiElement getRightParen();
+
+  @Nullable
+  PsiElement getSemicolon();
+
 }

@@ -27,6 +27,24 @@ public class GlagolRepositoryTypeImpl extends GlagolTypeImpl implements GlagolRe
 
   @Override
   @NotNull
+  public PsiElement getGt() {
+    return findNotNullChildByType(G_GT);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getKwRepository() {
+    return findNotNullChildByType(G_KW_REPOSITORY);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getLt() {
+    return findNotNullChildByType(G_LT);
+  }
+
+  @Override
+  @NotNull
   public PsiElement getSymbolName() {
     return findNotNullChildByType(G_SYMBOL_NAME);
   }

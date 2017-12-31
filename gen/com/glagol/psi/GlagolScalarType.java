@@ -10,4 +10,16 @@ public interface GlagolScalarType extends GlagolType {
   @Nullable
   PsiElement getTypeBool();
 
+  @Nullable
+  PsiElement getTypeFloat();
+
+  @Nullable
+  PsiElement getTypeInt();
+
+  @Nullable
+  PsiElement getTypeString();
+
+  @Nullable
+  PsiElement getTypeVoid();
+
 }

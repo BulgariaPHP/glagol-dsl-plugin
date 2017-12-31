@@ -31,4 +31,28 @@ public class GlagolScalarTypeImpl extends GlagolTypeImpl implements GlagolScalar
     return findChildByType(G_TYPE_BOOL);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getTypeFloat() {
+    return findChildByType(G_TYPE_FLOAT);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getTypeInt() {
+    return findChildByType(G_TYPE_INT);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getTypeString() {
+    return findChildByType(G_TYPE_STRING);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getTypeVoid() {
+    return findChildByType(G_TYPE_VOID);
+  }
+
 }

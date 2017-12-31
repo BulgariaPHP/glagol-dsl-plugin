@@ -8,10 +8,9 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.glagol.psi.GlagolTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.glagol.psi.*;
 
-public class GlagolDvMapPairImpl extends ASTWrapperPsiElement implements GlagolDvMapPair {
+public class GlagolDvMapPairImpl extends GlagolPsiElement implements GlagolDvMapPair {
 
   public GlagolDvMapPairImpl(ASTNode node) {
     super(node);
@@ -30,6 +29,12 @@ public class GlagolDvMapPairImpl extends ASTWrapperPsiElement implements GlagolD
   @NotNull
   public List<GlagolDefaultValue> getDefaultValueList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, GlagolDefaultValue.class);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getColon() {
+    return findNotNullChildByType(G_COLON);
   }
 
 }

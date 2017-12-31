@@ -33,6 +33,18 @@ public class GlagolInvokeFinalExprImpl extends GlagolExprImpl implements GlagolI
 
   @Override
   @NotNull
+  public PsiElement getLeftParen() {
+    return findNotNullChildByType(G_LEFT_PAREN);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getRightParen() {
+    return findNotNullChildByType(G_RIGHT_PAREN);
+  }
+
+  @Override
+  @NotNull
   public PsiElement getId() {
     return findNotNullChildByType(G_ID);
   }

@@ -38,6 +38,18 @@ public class GlagolDeclareStmtImpl extends GlagolStmtImpl implements GlagolDecla
   }
 
   @Override
+  @Nullable
+  public PsiElement getOpEq() {
+    return findChildByType(G_OP_EQ);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getSemicolon() {
+    return findChildByType(G_SEMICOLON);
+  }
+
+  @Override
   @NotNull
   public PsiElement getId() {
     return findNotNullChildByType(G_ID);

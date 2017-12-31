@@ -2,7 +2,7 @@
   parserClass="com.glagol.parser.GlagolParser"
   parserUtilClass="com.glagol.parser.GlagolParserUtil"
 
-  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+  extends="com.glagol.psi.impl.GlagolPsiElement"
 
   psiClassPrefix="Glagol"
   psiImplClassSuffix="Impl"
@@ -14,9 +14,14 @@
   elementTypeClass="com.glagol.psi.GlagolElementType"
   tokenTypeClass="com.glagol.psi.GlagolTokenType"
 
+  psiImplUtilClass="com.glagol.psi.impl.GlagolPsiImplUtil"
+
   extends(".*type")=type
   extends(".*expr")=expr
   extends(".*stmt")=stmt
+
+
+  generateTokenAccessors=true
 
   consumeTokenMethod(".*_expr|expr")="consumeTokenFast"
 
@@ -117,7 +122,9 @@ private route_parts ::= (route_part '/')* route_part
 private route_part ::= id | route_placeholder
 private route_placeholder ::= ':' id
 
-annotation ::= '@' id '=' annotation_arg | '@' id '(' annotation_arg_sequence ')'| '@' id
+annotation ::= '@' id '=' annotation_arg | '@' id '(' annotation_arg_sequence ')'| '@' id {
+    methods = [getName isAnnotation]
+}
 private annotation_arg ::= literal | annotation_arg_list | annotation_arg_map
 private annotation_arg_list ::= '[' annotation_arg_sequence? ']'
 private annotation_arg_sequence ::= (annotation_arg ',')* annotation_arg

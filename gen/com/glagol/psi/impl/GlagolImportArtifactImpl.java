@@ -8,10 +8,9 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.glagol.psi.GlagolTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.glagol.psi.*;
 
-public class GlagolImportArtifactImpl extends ASTWrapperPsiElement implements GlagolImportArtifact {
+public class GlagolImportArtifactImpl extends GlagolPsiElement implements GlagolImportArtifact {
 
   public GlagolImportArtifactImpl(ASTNode node) {
     super(node);
@@ -30,6 +29,24 @@ public class GlagolImportArtifactImpl extends ASTWrapperPsiElement implements Gl
   @NotNull
   public GlagolQualifiedName getQualifiedName() {
     return findNotNullChildByClass(GlagolQualifiedName.class);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getKwAlias() {
+    return findChildByType(G_KW_ALIAS);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getKwImport() {
+    return findNotNullChildByType(G_KW_IMPORT);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getSemicolon() {
+    return findNotNullChildByType(G_SEMICOLON);
   }
 
   @Override

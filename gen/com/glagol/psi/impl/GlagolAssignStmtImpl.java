@@ -37,4 +37,10 @@ public class GlagolAssignStmtImpl extends GlagolStmtImpl implements GlagolAssign
     return findNotNullChildByClass(GlagolStmt.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getOpEq() {
+    return findNotNullChildByType(G_OP_EQ);
+  }
+
 }

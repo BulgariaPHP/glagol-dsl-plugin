@@ -8,10 +8,9 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.glagol.psi.GlagolTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.glagol.psi.*;
 
-public abstract class GlagolExprImpl extends ASTWrapperPsiElement implements GlagolExpr {
+public abstract class GlagolExprImpl extends GlagolPsiElement implements GlagolExpr {
 
   public GlagolExprImpl(ASTNode node) {
     super(node);

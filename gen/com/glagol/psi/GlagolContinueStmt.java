@@ -7,6 +7,12 @@ import com.intellij.psi.PsiElement;
 
 public interface GlagolContinueStmt extends GlagolStmt {
 
+  @NotNull
+  PsiElement getKwContinue();
+
+  @NotNull
+  PsiElement getSemicolon();
+
   @Nullable
   PsiElement getInt();
 

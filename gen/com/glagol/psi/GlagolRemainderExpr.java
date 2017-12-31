@@ -10,4 +10,7 @@ public interface GlagolRemainderExpr extends GlagolExpr {
   @NotNull
   List<GlagolExpr> getExprList();
 
+  @NotNull
+  PsiElement getPercent();
+
 }

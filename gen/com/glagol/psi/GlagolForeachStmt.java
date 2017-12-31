@@ -13,4 +13,19 @@ public interface GlagolForeachStmt extends GlagolStmt {
   @NotNull
   GlagolStmt getStmt();
 
+  @NotNull
+  PsiElement getColon();
+
+  @NotNull
+  PsiElement getKwAlias();
+
+  @NotNull
+  PsiElement getKwFor();
+
+  @NotNull
+  PsiElement getLeftParen();
+
+  @NotNull
+  PsiElement getRightParen();
+
 }

@@ -26,6 +26,18 @@ public class GlagolContinueStmtImpl extends GlagolStmtImpl implements GlagolCont
   }
 
   @Override
+  @NotNull
+  public PsiElement getKwContinue() {
+    return findNotNullChildByType(G_KW_CONTINUE);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getSemicolon() {
+    return findNotNullChildByType(G_SEMICOLON);
+  }
+
+  @Override
   @Nullable
   public PsiElement getInt() {
     return findChildByType(G_INT);

@@ -10,6 +10,18 @@ public interface GlagolDeclUtil extends PsiElement {
   @NotNull
   List<GlagolMember> getMemberList();
 
+  @Nullable
+  PsiElement getKwService();
+
+  @Nullable
+  PsiElement getKwUtil();
+
+  @NotNull
+  PsiElement getLeftBrace();
+
+  @NotNull
+  PsiElement getRightBrace();
+
   @NotNull
   PsiElement getSymbolName();
 

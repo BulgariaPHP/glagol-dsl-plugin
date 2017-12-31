@@ -10,4 +10,10 @@ public interface GlagolListType extends GlagolType {
   @NotNull
   GlagolType getType();
 
+  @NotNull
+  PsiElement getLeftBracket();
+
+  @NotNull
+  PsiElement getRightBracket();
+
 }

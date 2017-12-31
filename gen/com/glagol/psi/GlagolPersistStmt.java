@@ -10,4 +10,10 @@ public interface GlagolPersistStmt extends GlagolStmt {
   @NotNull
   GlagolExpr getExpr();
 
+  @NotNull
+  PsiElement getKwPersist();
+
+  @NotNull
+  PsiElement getSemicolon();
+
 }

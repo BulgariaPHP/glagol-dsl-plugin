@@ -10,4 +10,7 @@ public interface GlagolMapPairExpr extends GlagolExpr {
   @NotNull
   List<GlagolExpr> getExprList();
 
+  @NotNull
+  PsiElement getColon();
+
 }

@@ -37,4 +37,34 @@ public class GlagolForeachStmtImpl extends GlagolStmtImpl implements GlagolForea
     return findNotNullChildByClass(GlagolStmt.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getColon() {
+    return findNotNullChildByType(G_COLON);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getKwAlias() {
+    return findNotNullChildByType(G_KW_ALIAS);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getKwFor() {
+    return findNotNullChildByType(G_KW_FOR);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getLeftParen() {
+    return findNotNullChildByType(G_LEFT_PAREN);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getRightParen() {
+    return findNotNullChildByType(G_RIGHT_PAREN);
+  }
+
 }

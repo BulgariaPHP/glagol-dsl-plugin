@@ -10,4 +10,7 @@ public interface GlagolDivisionExpr extends GlagolExpr {
   @NotNull
   List<GlagolExpr> getExprList();
 
+  @NotNull
+  PsiElement getSlash();
+
 }

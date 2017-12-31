@@ -10,4 +10,13 @@ public interface GlagolMapType extends GlagolType {
   @NotNull
   List<GlagolType> getTypeList();
 
+  @NotNull
+  PsiElement getComma();
+
+  @NotNull
+  PsiElement getLeftBrace();
+
+  @NotNull
+  PsiElement getRightBrace();
+
 }

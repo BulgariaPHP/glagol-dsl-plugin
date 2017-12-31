@@ -37,4 +37,16 @@ public class GlagolCastExprImpl extends GlagolExprImpl implements GlagolCastExpr
     return findNotNullChildByClass(GlagolType.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getLeftParen() {
+    return findNotNullChildByType(G_LEFT_PAREN);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getRightParen() {
+    return findNotNullChildByType(G_RIGHT_PAREN);
+  }
+
 }

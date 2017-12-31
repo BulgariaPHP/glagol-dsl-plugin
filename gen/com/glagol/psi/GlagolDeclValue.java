@@ -11,6 +11,15 @@ public interface GlagolDeclValue extends PsiElement {
   List<GlagolMember> getMemberList();
 
   @NotNull
+  PsiElement getKwValue();
+
+  @NotNull
+  PsiElement getLeftBrace();
+
+  @NotNull
+  PsiElement getRightBrace();
+
+  @NotNull
   PsiElement getSymbolName();
 
 }

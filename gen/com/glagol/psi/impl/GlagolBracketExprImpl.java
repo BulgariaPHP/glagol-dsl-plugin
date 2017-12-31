@@ -31,4 +31,16 @@ public class GlagolBracketExprImpl extends GlagolExprImpl implements GlagolBrack
     return findChildByClass(GlagolExpr.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getLeftParen() {
+    return findNotNullChildByType(G_LEFT_PAREN);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getRightParen() {
+    return findChildByType(G_RIGHT_PAREN);
+  }
+
 }

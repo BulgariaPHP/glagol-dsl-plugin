@@ -10,4 +10,10 @@ public interface GlagolMapExpr extends GlagolExpr {
   @Nullable
   GlagolExpr getExpr();
 
+  @NotNull
+  PsiElement getLeftBrace();
+
+  @NotNull
+  PsiElement getRightBrace();
+
 }

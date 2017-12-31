@@ -31,4 +31,16 @@ public class GlagolBlockStmtImpl extends GlagolStmtImpl implements GlagolBlockSt
     return PsiTreeUtil.getChildrenOfTypeAsList(this, GlagolStmt.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getLeftBrace() {
+    return findNotNullChildByType(G_LEFT_BRACE);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getRightBrace() {
+    return findNotNullChildByType(G_RIGHT_BRACE);
+  }
+
 }

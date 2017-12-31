@@ -10,4 +10,7 @@ public interface GlagolDvMapPair extends PsiElement {
   @NotNull
   List<GlagolDefaultValue> getDefaultValueList();
 
+  @NotNull
+  PsiElement getColon();
+
 }

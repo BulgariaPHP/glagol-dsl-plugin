@@ -7,4 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface GlagolPositiveExpr extends GlagolExpr {
 
+  @NotNull
+  PsiElement getPlus();
+
 }

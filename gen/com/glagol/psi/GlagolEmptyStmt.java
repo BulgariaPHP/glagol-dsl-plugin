@@ -7,4 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface GlagolEmptyStmt extends GlagolStmt {
 
+  @NotNull
+  PsiElement getSemicolon();
+
 }

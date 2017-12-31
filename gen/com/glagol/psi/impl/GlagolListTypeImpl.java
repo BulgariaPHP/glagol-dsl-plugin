@@ -31,4 +31,16 @@ public class GlagolListTypeImpl extends GlagolTypeImpl implements GlagolListType
     return findNotNullChildByClass(GlagolType.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getLeftBracket() {
+    return findNotNullChildByType(G_LEFT_BRACKET);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getRightBracket() {
+    return findNotNullChildByType(G_RIGHT_BRACKET);
+  }
+
 }

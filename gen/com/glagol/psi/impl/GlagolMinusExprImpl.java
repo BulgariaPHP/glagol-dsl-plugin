@@ -31,4 +31,10 @@ public class GlagolMinusExprImpl extends GlagolExprImpl implements GlagolMinusEx
     return PsiTreeUtil.getChildrenOfTypeAsList(this, GlagolExpr.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getMinus() {
+    return findNotNullChildByType(G_MINUS);
+  }
+
 }

@@ -31,4 +31,10 @@ public class GlagolGtExprImpl extends GlagolExprImpl implements GlagolGtExpr {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, GlagolExpr.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getGt() {
+    return findNotNullChildByType(G_GT);
+  }
+
 }

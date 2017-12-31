@@ -10,4 +10,10 @@ public interface GlagolTernaryExpr extends GlagolExpr {
   @NotNull
   List<GlagolExpr> getExprList();
 
+  @Nullable
+  PsiElement getColon();
+
+  @NotNull
+  PsiElement getQuestionMark();
+
 }

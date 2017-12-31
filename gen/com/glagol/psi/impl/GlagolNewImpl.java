@@ -8,10 +8,9 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.glagol.psi.GlagolTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.glagol.psi.*;
 
-public class GlagolNewImpl extends ASTWrapperPsiElement implements GlagolNew {
+public class GlagolNewImpl extends GlagolPsiElement implements GlagolNew {
 
   public GlagolNewImpl(ASTNode node) {
     super(node);
@@ -36,6 +35,24 @@ public class GlagolNewImpl extends ASTWrapperPsiElement implements GlagolNew {
   @Nullable
   public GlagolDvSequence getDvSequence() {
     return findChildByClass(GlagolDvSequence.class);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getKwNew() {
+    return findNotNullChildByType(G_KW_NEW);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getLeftParen() {
+    return findNotNullChildByType(G_LEFT_PAREN);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getRightParen() {
+    return findNotNullChildByType(G_RIGHT_PAREN);
   }
 
 }

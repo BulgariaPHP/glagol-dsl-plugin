@@ -8,10 +8,9 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.glagol.psi.GlagolTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.glagol.psi.*;
 
-public class GlagolDeclarationImpl extends ASTWrapperPsiElement implements GlagolDeclaration {
+public class GlagolDeclarationImpl extends GlagolPsiElement implements GlagolDeclaration {
 
   public GlagolDeclarationImpl(ASTNode node) {
     super(node);

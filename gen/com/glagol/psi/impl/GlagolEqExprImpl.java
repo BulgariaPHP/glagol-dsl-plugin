@@ -31,4 +31,10 @@ public class GlagolEqExprImpl extends GlagolExprImpl implements GlagolEqExpr {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, GlagolExpr.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getEq() {
+    return findNotNullChildByType(G_EQ);
+  }
+
 }

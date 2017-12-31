@@ -25,4 +25,10 @@ public class GlagolSelfieTypeImpl extends GlagolTypeImpl implements GlagolSelfie
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getKwSelfie() {
+    return findNotNullChildByType(G_KW_SELFIE);
+  }
+
 }

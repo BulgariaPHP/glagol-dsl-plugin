@@ -7,6 +7,12 @@ import com.intellij.psi.PsiElement;
 
 public interface GlagolBreakStmt extends GlagolStmt {
 
+  @NotNull
+  PsiElement getKwBreak();
+
+  @NotNull
+  PsiElement getSemicolon();
+
   @Nullable
   PsiElement getInt();
 

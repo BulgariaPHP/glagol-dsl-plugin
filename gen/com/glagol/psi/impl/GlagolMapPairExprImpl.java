@@ -31,4 +31,10 @@ public class GlagolMapPairExprImpl extends GlagolExprImpl implements GlagolMapPa
     return PsiTreeUtil.getChildrenOfTypeAsList(this, GlagolExpr.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getColon() {
+    return findNotNullChildByType(G_COLON);
+  }
+
 }

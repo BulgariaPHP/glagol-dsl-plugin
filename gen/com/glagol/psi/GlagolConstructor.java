@@ -22,6 +22,18 @@ public interface GlagolConstructor extends PsiElement {
   @NotNull
   List<GlagolType> getTypeList();
 
+  @Nullable
+  PsiElement getKwWhen();
+
+  @NotNull
+  PsiElement getLeftParen();
+
+  @NotNull
+  PsiElement getRightParen();
+
+  @Nullable
+  PsiElement getSemicolon();
+
   @NotNull
   PsiElement getSymbolName();
 

@@ -10,4 +10,7 @@ public interface GlagolPlusExpr extends GlagolExpr {
   @NotNull
   List<GlagolExpr> getExprList();
 
+  @NotNull
+  PsiElement getPlus();
+
 }

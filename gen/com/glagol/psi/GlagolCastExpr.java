@@ -13,4 +13,10 @@ public interface GlagolCastExpr extends GlagolExpr {
   @NotNull
   GlagolType getType();
 
+  @NotNull
+  PsiElement getLeftParen();
+
+  @NotNull
+  PsiElement getRightParen();
+
 }

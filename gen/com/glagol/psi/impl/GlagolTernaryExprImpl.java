@@ -31,4 +31,16 @@ public class GlagolTernaryExprImpl extends GlagolExprImpl implements GlagolTerna
     return PsiTreeUtil.getChildrenOfTypeAsList(this, GlagolExpr.class);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getColon() {
+    return findChildByType(G_COLON);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getQuestionMark() {
+    return findNotNullChildByType(G_QUESTION_MARK);
+  }
+
 }

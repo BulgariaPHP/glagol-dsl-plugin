@@ -13,6 +13,12 @@ public interface GlagolProperty extends PsiElement {
   @NotNull
   GlagolType getType();
 
+  @Nullable
+  PsiElement getOpEq();
+
+  @NotNull
+  PsiElement getSemicolon();
+
   @NotNull
   PsiElement getId();
 

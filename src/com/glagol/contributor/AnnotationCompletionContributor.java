@@ -19,21 +19,12 @@ import static com.intellij.patterns.PlatformPatterns.psiElement;
 public class AnnotationCompletionContributor extends CompletionContributor implements DumbAware {
 
     private HashMap<String, SuggestionOptions> annotationKeys = new HashMap<String, SuggestionOptions>() {{
-        put("table", new SuggestionOptions("(\"\")", 2));
-        put("index", new SuggestionOptions("()", 1));
+        put("table", new SuggestionOptions("=\"\"", 2));
+        put("doc", new SuggestionOptions("=\"\"", 2));
+        put("index", new SuggestionOptions("", 0));
         put("field", new SuggestionOptions("()", 1));
-        put("author", new SuggestionOptions("(\"\")", 2));
-        put("contributor", new SuggestionOptions("(\"\")", 2));
-        put("info", new SuggestionOptions("(\"\")", 2));
-        put("todo", new SuggestionOptions("(\"\")", 2));
-    }};
-
-    private HashMap<String, SuggestionOptions> fieldKeys = new HashMap<String, SuggestionOptions>() {{
-        put("key", new SuggestionOptions(": ", 2));
-        put("sequence", new SuggestionOptions(": ", 2));
-        put("type", new SuggestionOptions(": ", 2));
-        put("size", new SuggestionOptions(": ", 2));
-        put("column", new SuggestionOptions(": \"\"", 3));
+        put("autofind", new SuggestionOptions("", 0));
+        put("autofill", new SuggestionOptions("", 0));
     }};
 
     public AnnotationCompletionContributor() {
@@ -49,15 +40,6 @@ public class AnnotationCompletionContributor extends CompletionContributor imple
                 suggestionsWithInsertHandler(completionResultSet, annotationKeys);
             }
         });
-        extend(CompletionType.BASIC, psiElement().withParent(psiElement(GlagolTypes.G_ANNOTATION)).afterLeaf(",", "{"),
-                new CompletionProvider<CompletionParameters>() {
-                    @Override
-                    protected void addCompletions(@NotNull CompletionParameters completionParameters,
-                                                  ProcessingContext processingContext,
-                                                  @NotNull CompletionResultSet completionResultSet) {
-                        suggestionsWithInsertHandler(completionResultSet, fieldKeys);
-                    }
-                });
         extend(CompletionType.BASIC, psiElement().afterLeafSkipping(
                 psiElement().whitespaceCommentEmptyOrError(),
                 psiElement().with(new PatternCondition<PsiElement>("keyAutocomplete") {

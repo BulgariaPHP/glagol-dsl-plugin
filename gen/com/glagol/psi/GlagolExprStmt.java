@@ -10,4 +10,7 @@ public interface GlagolExprStmt extends GlagolStmt {
   @NotNull
   GlagolExpr getExpr();
 
+  @NotNull
+  PsiElement getSemicolon();
+
 }

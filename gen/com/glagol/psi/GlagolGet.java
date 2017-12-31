@@ -10,4 +10,7 @@ public interface GlagolGet extends PsiElement {
   @NotNull
   GlagolType getType();
 
+  @NotNull
+  PsiElement getKwGet();
+
 }

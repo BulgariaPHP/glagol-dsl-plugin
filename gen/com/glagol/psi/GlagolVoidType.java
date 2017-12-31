@@ -7,4 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface GlagolVoidType extends GlagolType {
 
+  @NotNull
+  PsiElement getTypeVoid();
+
 }

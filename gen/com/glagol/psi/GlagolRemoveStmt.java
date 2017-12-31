@@ -10,4 +10,10 @@ public interface GlagolRemoveStmt extends GlagolStmt {
   @NotNull
   GlagolExpr getExpr();
 
+  @NotNull
+  PsiElement getKwRemove();
+
+  @NotNull
+  PsiElement getSemicolon();
+
 }

@@ -13,4 +13,7 @@ public interface GlagolAssignStmt extends GlagolStmt {
   @NotNull
   GlagolStmt getStmt();
 
+  @NotNull
+  PsiElement getOpEq();
+
 }

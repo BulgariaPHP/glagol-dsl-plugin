@@ -31,4 +31,10 @@ public class GlagolDivisionExprImpl extends GlagolExprImpl implements GlagolDivi
     return PsiTreeUtil.getChildrenOfTypeAsList(this, GlagolExpr.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getSlash() {
+    return findNotNullChildByType(G_SLASH);
+  }
+
 }

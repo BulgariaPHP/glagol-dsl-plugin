@@ -31,4 +31,16 @@ public class GlagolFlushStmtImpl extends GlagolStmtImpl implements GlagolFlushSt
     return findChildByClass(GlagolExpr.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getKwFlush() {
+    return findNotNullChildByType(G_KW_FLUSH);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getSemicolon() {
+    return findNotNullChildByType(G_SEMICOLON);
+  }
+
 }

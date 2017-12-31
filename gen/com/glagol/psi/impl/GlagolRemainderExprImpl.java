@@ -31,4 +31,10 @@ public class GlagolRemainderExprImpl extends GlagolExprImpl implements GlagolRem
     return PsiTreeUtil.getChildrenOfTypeAsList(this, GlagolExpr.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getPercent() {
+    return findNotNullChildByType(G_PERCENT);
+  }
+
 }

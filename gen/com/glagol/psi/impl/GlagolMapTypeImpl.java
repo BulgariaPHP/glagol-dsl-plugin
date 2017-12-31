@@ -31,4 +31,22 @@ public class GlagolMapTypeImpl extends GlagolTypeImpl implements GlagolMapType {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, GlagolType.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getComma() {
+    return findNotNullChildByType(G_COMMA);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getLeftBrace() {
+    return findNotNullChildByType(G_LEFT_BRACE);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getRightBrace() {
+    return findNotNullChildByType(G_RIGHT_BRACE);
+  }
+
 }

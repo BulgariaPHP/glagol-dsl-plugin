@@ -7,4 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface GlagolThisExpr extends GlagolExpr {
 
+  @NotNull
+  PsiElement getKwThis();
+
 }

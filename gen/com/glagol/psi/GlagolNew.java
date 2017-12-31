@@ -13,4 +13,13 @@ public interface GlagolNew extends PsiElement {
   @Nullable
   GlagolDvSequence getDvSequence();
 
+  @NotNull
+  PsiElement getKwNew();
+
+  @NotNull
+  PsiElement getLeftParen();
+
+  @NotNull
+  PsiElement getRightParen();
+
 }

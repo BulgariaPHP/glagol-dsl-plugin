@@ -22,4 +22,22 @@ public interface GlagolMethod extends PsiElement {
   @NotNull
   List<GlagolType> getTypeList();
 
+  @Nullable
+  PsiElement getKwPrivate();
+
+  @Nullable
+  PsiElement getKwPublic();
+
+  @Nullable
+  PsiElement getKwWhen();
+
+  @NotNull
+  PsiElement getLeftParen();
+
+  @NotNull
+  PsiElement getRightParen();
+
+  @Nullable
+  PsiElement getSemicolon();
+
 }

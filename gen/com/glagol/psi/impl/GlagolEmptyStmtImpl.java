@@ -25,4 +25,10 @@ public class GlagolEmptyStmtImpl extends GlagolStmtImpl implements GlagolEmptySt
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getSemicolon() {
+    return findNotNullChildByType(G_SEMICOLON);
+  }
+
 }

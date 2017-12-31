@@ -10,4 +10,10 @@ public interface GlagolReturnStmt extends GlagolStmt {
   @Nullable
   GlagolExpr getExpr();
 
+  @NotNull
+  PsiElement getKwReturn();
+
+  @NotNull
+  PsiElement getSemicolon();
+
 }

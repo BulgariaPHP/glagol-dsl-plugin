@@ -11,6 +11,15 @@ public interface GlagolNewExpr extends GlagolExpr {
   GlagolExpr getExpr();
 
   @NotNull
+  PsiElement getKwNew();
+
+  @NotNull
+  PsiElement getLeftParen();
+
+  @NotNull
+  PsiElement getRightParen();
+
+  @NotNull
   PsiElement getSymbolName();
 
 }

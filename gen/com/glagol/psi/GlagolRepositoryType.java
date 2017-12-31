@@ -8,6 +8,15 @@ import com.intellij.psi.PsiElement;
 public interface GlagolRepositoryType extends GlagolType {
 
   @NotNull
+  PsiElement getGt();
+
+  @NotNull
+  PsiElement getKwRepository();
+
+  @NotNull
+  PsiElement getLt();
+
+  @NotNull
   PsiElement getSymbolName();
 
 }
