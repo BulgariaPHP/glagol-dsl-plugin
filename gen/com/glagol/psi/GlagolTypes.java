@@ -10,11 +10,13 @@ public interface GlagolTypes {
 
   IElementType G_ACTION = new GlagolElementType("G_ACTION");
   IElementType G_AND_EXPR = new GlagolElementType("G_AND_EXPR");
+  IElementType G_AND_QEXPR = new GlagolElementType("G_AND_QEXPR");
   IElementType G_ANNOTATION = new GlagolElementType("G_ANNOTATION");
   IElementType G_ARTIFACT_TYPE = new GlagolElementType("G_ARTIFACT_TYPE");
   IElementType G_ASSIGN_STMT = new GlagolElementType("G_ASSIGN_STMT");
   IElementType G_BLOCK_STMT = new GlagolElementType("G_BLOCK_STMT");
   IElementType G_BRACKET_EXPR = new GlagolElementType("G_BRACKET_EXPR");
+  IElementType G_BRACKET_QEXPR = new GlagolElementType("G_BRACKET_QEXPR");
   IElementType G_BREAK_STMT = new GlagolElementType("G_BREAK_STMT");
   IElementType G_CAST_EXPR = new GlagolElementType("G_CAST_EXPR");
   IElementType G_CONSTRUCTOR = new GlagolElementType("G_CONSTRUCTOR");
@@ -34,6 +36,7 @@ public interface GlagolTypes {
   IElementType G_DV_MAP_SEQUENCE = new GlagolElementType("G_DV_MAP_SEQUENCE");
   IElementType G_DV_SEQUENCE = new GlagolElementType("G_DV_SEQUENCE");
   IElementType G_EMPTY_STMT = new GlagolElementType("G_EMPTY_STMT");
+  IElementType G_EQUALS_QEXPR = new GlagolElementType("G_EQUALS_QEXPR");
   IElementType G_EQ_EXPR = new GlagolElementType("G_EQ_EXPR");
   IElementType G_EXPR = new GlagolElementType("G_EXPR");
   IElementType G_EXPR_STMT = new GlagolElementType("G_EXPR_STMT");
@@ -42,18 +45,25 @@ public interface GlagolTypes {
   IElementType G_FOREACH_STMT = new GlagolElementType("G_FOREACH_STMT");
   IElementType G_GET = new GlagolElementType("G_GET");
   IElementType G_GTE_EXPR = new GlagolElementType("G_GTE_EXPR");
+  IElementType G_GTE_QEXPR = new GlagolElementType("G_GTE_QEXPR");
   IElementType G_GT_EXPR = new GlagolElementType("G_GT_EXPR");
+  IElementType G_GT_QEXPR = new GlagolElementType("G_GT_QEXPR");
+  IElementType G_G_QEXPR = new GlagolElementType("G_G_QEXPR");
   IElementType G_IF_STMT = new GlagolElementType("G_IF_STMT");
   IElementType G_IMPORT_ARTIFACT = new GlagolElementType("G_IMPORT_ARTIFACT");
   IElementType G_INVOKE_EXPR = new GlagolElementType("G_INVOKE_EXPR");
   IElementType G_INVOKE_FINAL_EXPR = new GlagolElementType("G_INVOKE_FINAL_EXPR");
+  IElementType G_IS_NOT_NULL_QEXPR = new GlagolElementType("G_IS_NOT_NULL_QEXPR");
+  IElementType G_IS_NULL_QEXPR = new GlagolElementType("G_IS_NULL_QEXPR");
   IElementType G_LIST_EXPR = new GlagolElementType("G_LIST_EXPR");
   IElementType G_LIST_SEQ_EXPR = new GlagolElementType("G_LIST_SEQ_EXPR");
   IElementType G_LIST_TYPE = new GlagolElementType("G_LIST_TYPE");
   IElementType G_LITERAL = new GlagolElementType("G_LITERAL");
   IElementType G_LITERAL_EXPR = new GlagolElementType("G_LITERAL_EXPR");
   IElementType G_LTE_EXPR = new GlagolElementType("G_LTE_EXPR");
+  IElementType G_LTE_QEXPR = new GlagolElementType("G_LTE_QEXPR");
   IElementType G_LT_EXPR = new GlagolElementType("G_LT_EXPR");
+  IElementType G_LT_QEXPR = new GlagolElementType("G_LT_QEXPR");
   IElementType G_MAP_EXPR = new GlagolElementType("G_MAP_EXPR");
   IElementType G_MAP_PAIR_EXPR = new GlagolElementType("G_MAP_PAIR_EXPR");
   IElementType G_MAP_SEQ_EXPR = new GlagolElementType("G_MAP_SEQ_EXPR");
@@ -64,15 +74,23 @@ public interface GlagolTypes {
   IElementType G_NEGATIVE_EXPR = new GlagolElementType("G_NEGATIVE_EXPR");
   IElementType G_NEW = new GlagolElementType("G_NEW");
   IElementType G_NEW_EXPR = new GlagolElementType("G_NEW_EXPR");
+  IElementType G_NON_EQUALS_QEXPR = new GlagolElementType("G_NON_EQUALS_QEXPR");
   IElementType G_NON_EQ_EXPR = new GlagolElementType("G_NON_EQ_EXPR");
   IElementType G_OR_EXPR = new GlagolElementType("G_OR_EXPR");
+  IElementType G_OR_QEXPR = new GlagolElementType("G_OR_QEXPR");
   IElementType G_PERSIST_STMT = new GlagolElementType("G_PERSIST_STMT");
   IElementType G_PLUS_EXPR = new GlagolElementType("G_PLUS_EXPR");
   IElementType G_POSITIVE_EXPR = new GlagolElementType("G_POSITIVE_EXPR");
   IElementType G_PRODUCT_EXPR = new GlagolElementType("G_PRODUCT_EXPR");
   IElementType G_PROPERTY = new GlagolElementType("G_PROPERTY");
   IElementType G_PROPERTY_DEFAULT_VALUE = new GlagolElementType("G_PROPERTY_DEFAULT_VALUE");
+  IElementType G_QEXPR = new GlagolElementType("G_QEXPR");
   IElementType G_QUALIFIED_NAME = new GlagolElementType("G_QUALIFIED_NAME");
+  IElementType G_QUERY_EXPR = new GlagolElementType("G_QUERY_EXPR");
+  IElementType G_QUERY_FIELD = new GlagolElementType("G_QUERY_FIELD");
+  IElementType G_QUERY_FIELD_QEXPR = new GlagolElementType("G_QUERY_FIELD_QEXPR");
+  IElementType G_QUERY_SPEC = new GlagolElementType("G_QUERY_SPEC");
+  IElementType G_QUERY_STATEMENT = new GlagolElementType("G_QUERY_STATEMENT");
   IElementType G_REMAINDER_EXPR = new GlagolElementType("G_REMAINDER_EXPR");
   IElementType G_REMOVE_STMT = new GlagolElementType("G_REMOVE_STMT");
   IElementType G_REPOSITORY_TYPE = new GlagolElementType("G_REPOSITORY_TYPE");
@@ -103,19 +121,31 @@ public interface GlagolTypes {
   IElementType G_ID = new GlagolTokenType("id");
   IElementType G_INT = new GlagolTokenType("int");
   IElementType G_KW_ALIAS = new GlagolTokenType("as");
+  IElementType G_KW_AND = new GlagolTokenType("AND");
+  IElementType G_KW_ASC = new GlagolTokenType("ASC");
   IElementType G_KW_BREAK = new GlagolTokenType("break");
+  IElementType G_KW_BY = new GlagolTokenType("BY");
   IElementType G_KW_CONTINUE = new GlagolTokenType("continue");
   IElementType G_KW_CONTROLLER = new GlagolTokenType("controller");
+  IElementType G_KW_DESC = new GlagolTokenType("DESC");
   IElementType G_KW_ELSE = new GlagolTokenType("else");
   IElementType G_KW_ENTITY = new GlagolTokenType("entity");
   IElementType G_KW_FLUSH = new GlagolTokenType("flush");
   IElementType G_KW_FOR = new GlagolTokenType("for");
+  IElementType G_KW_FROM = new GlagolTokenType("FROM");
   IElementType G_KW_GET = new GlagolTokenType("get");
   IElementType G_KW_IF = new GlagolTokenType("if");
   IElementType G_KW_IMPORT = new GlagolTokenType("import");
+  IElementType G_KW_IS = new GlagolTokenType("IS");
   IElementType G_KW_JSON_API = new GlagolTokenType("json-api");
+  IElementType G_KW_LIMIT = new GlagolTokenType("LIMIT");
   IElementType G_KW_NEW = new GlagolTokenType("new");
+  IElementType G_KW_NOT = new GlagolTokenType("NOT");
   IElementType G_KW_NS = new GlagolTokenType("namespace");
+  IElementType G_KW_NULL = new GlagolTokenType("NULL");
+  IElementType G_KW_OFFSET = new GlagolTokenType("OFFSET");
+  IElementType G_KW_OR = new GlagolTokenType("OR");
+  IElementType G_KW_ORDER = new GlagolTokenType("ORDER");
   IElementType G_KW_PERSIST = new GlagolTokenType("persist");
   IElementType G_KW_PRIMARY = new GlagolTokenType("primary");
   IElementType G_KW_PRIVATE = new GlagolTokenType("private");
@@ -125,12 +155,14 @@ public interface GlagolTypes {
   IElementType G_KW_REPOSITORY = new GlagolTokenType("repository");
   IElementType G_KW_REST = new GlagolTokenType("rest");
   IElementType G_KW_RETURN = new GlagolTokenType("return");
+  IElementType G_KW_SELECT = new GlagolTokenType("SELECT");
   IElementType G_KW_SELFIE = new GlagolTokenType("selfie");
   IElementType G_KW_SERVICE = new GlagolTokenType("service");
   IElementType G_KW_THIS = new GlagolTokenType("this");
   IElementType G_KW_UTIL = new GlagolTokenType("util");
   IElementType G_KW_VALUE = new GlagolTokenType("value");
   IElementType G_KW_WHEN = new GlagolTokenType("when");
+  IElementType G_KW_WHERE = new GlagolTokenType("WHERE");
   IElementType G_LEFT_BRACE = new GlagolTokenType("{");
   IElementType G_LEFT_BRACKET = new GlagolTokenType("[");
   IElementType G_LEFT_PAREN = new GlagolTokenType("(");
@@ -143,15 +175,16 @@ public interface GlagolTypes {
   IElementType G_OR = new GlagolTokenType("||");
   IElementType G_PERCENT = new GlagolTokenType("%");
   IElementType G_PLUS = new GlagolTokenType("+");
+  IElementType G_QEXPR_END = new GlagolTokenType(">>");
+  IElementType G_QEXPR_START = new GlagolTokenType("<<");
   IElementType G_QUESTION_MARK = new GlagolTokenType("?");
-  IElementType G_REL_DIR = new GlagolTokenType("rel_dir");
   IElementType G_RIGHT_BRACE = new GlagolTokenType("}");
   IElementType G_RIGHT_BRACKET = new GlagolTokenType("]");
   IElementType G_RIGHT_PAREN = new GlagolTokenType(")");
   IElementType G_SEMICOLON = new GlagolTokenType(";");
   IElementType G_SLASH = new GlagolTokenType("/");
   IElementType G_STRING = new GlagolTokenType("string");
-  IElementType G_SYMBOL_NAME = new GlagolTokenType("symbol_name");
+  IElementType G_SYMBOL_NAME = new GlagolTokenType("SYMBOL_NAME");
   IElementType G_TYPE_BOOL = new GlagolTokenType("TYPE_BOOL");
   IElementType G_TYPE_FLOAT = new GlagolTokenType("float");
   IElementType G_TYPE_INT = new GlagolTokenType("int");
@@ -167,6 +200,9 @@ public interface GlagolTypes {
       else if (type == G_AND_EXPR) {
         return new GlagolAndExprImpl(node);
       }
+      else if (type == G_AND_QEXPR) {
+        return new GlagolAndQexprImpl(node);
+      }
       else if (type == G_ANNOTATION) {
         return new GlagolAnnotationImpl(node);
       }
@@ -181,6 +217,9 @@ public interface GlagolTypes {
       }
       else if (type == G_BRACKET_EXPR) {
         return new GlagolBracketExprImpl(node);
+      }
+      else if (type == G_BRACKET_QEXPR) {
+        return new GlagolBracketQexprImpl(node);
       }
       else if (type == G_BREAK_STMT) {
         return new GlagolBreakStmtImpl(node);
@@ -239,6 +278,9 @@ public interface GlagolTypes {
       else if (type == G_EMPTY_STMT) {
         return new GlagolEmptyStmtImpl(node);
       }
+      else if (type == G_EQUALS_QEXPR) {
+        return new GlagolEqualsQexprImpl(node);
+      }
       else if (type == G_EQ_EXPR) {
         return new GlagolEqExprImpl(node);
       }
@@ -260,8 +302,17 @@ public interface GlagolTypes {
       else if (type == G_GTE_EXPR) {
         return new GlagolGteExprImpl(node);
       }
+      else if (type == G_GTE_QEXPR) {
+        return new GlagolGteQexprImpl(node);
+      }
       else if (type == G_GT_EXPR) {
         return new GlagolGtExprImpl(node);
+      }
+      else if (type == G_GT_QEXPR) {
+        return new GlagolGtQexprImpl(node);
+      }
+      else if (type == G_G_QEXPR) {
+        return new GlagolGQexprImpl(node);
       }
       else if (type == G_IF_STMT) {
         return new GlagolIfStmtImpl(node);
@@ -274,6 +325,12 @@ public interface GlagolTypes {
       }
       else if (type == G_INVOKE_FINAL_EXPR) {
         return new GlagolInvokeFinalExprImpl(node);
+      }
+      else if (type == G_IS_NOT_NULL_QEXPR) {
+        return new GlagolIsNotNullQexprImpl(node);
+      }
+      else if (type == G_IS_NULL_QEXPR) {
+        return new GlagolIsNullQexprImpl(node);
       }
       else if (type == G_LIST_EXPR) {
         return new GlagolListExprImpl(node);
@@ -293,8 +350,14 @@ public interface GlagolTypes {
       else if (type == G_LTE_EXPR) {
         return new GlagolLteExprImpl(node);
       }
+      else if (type == G_LTE_QEXPR) {
+        return new GlagolLteQexprImpl(node);
+      }
       else if (type == G_LT_EXPR) {
         return new GlagolLtExprImpl(node);
+      }
+      else if (type == G_LT_QEXPR) {
+        return new GlagolLtQexprImpl(node);
       }
       else if (type == G_MAP_EXPR) {
         return new GlagolMapExprImpl(node);
@@ -326,11 +389,17 @@ public interface GlagolTypes {
       else if (type == G_NEW_EXPR) {
         return new GlagolNewExprImpl(node);
       }
+      else if (type == G_NON_EQUALS_QEXPR) {
+        return new GlagolNonEqualsQexprImpl(node);
+      }
       else if (type == G_NON_EQ_EXPR) {
         return new GlagolNonEqExprImpl(node);
       }
       else if (type == G_OR_EXPR) {
         return new GlagolOrExprImpl(node);
+      }
+      else if (type == G_OR_QEXPR) {
+        return new GlagolOrQexprImpl(node);
       }
       else if (type == G_PERSIST_STMT) {
         return new GlagolPersistStmtImpl(node);
@@ -352,6 +421,21 @@ public interface GlagolTypes {
       }
       else if (type == G_QUALIFIED_NAME) {
         return new GlagolQualifiedNameImpl(node);
+      }
+      else if (type == G_QUERY_EXPR) {
+        return new GlagolQueryExprImpl(node);
+      }
+      else if (type == G_QUERY_FIELD) {
+        return new GlagolQueryFieldImpl(node);
+      }
+      else if (type == G_QUERY_FIELD_QEXPR) {
+        return new GlagolQueryFieldQexprImpl(node);
+      }
+      else if (type == G_QUERY_SPEC) {
+        return new GlagolQuerySpecImpl(node);
+      }
+      else if (type == G_QUERY_STATEMENT) {
+        return new GlagolQueryStatementImpl(node);
       }
       else if (type == G_REMAINDER_EXPR) {
         return new GlagolRemainderExprImpl(node);

@@ -15,6 +15,10 @@ public class GlagolVisitor extends PsiElementVisitor {
     visitExpr(o);
   }
 
+  public void visitAndQexpr(@NotNull GlagolAndQexpr o) {
+    visitQexpr(o);
+  }
+
   public void visitAnnotation(@NotNull GlagolAnnotation o) {
     visitPsiElement(o);
   }
@@ -33,6 +37,10 @@ public class GlagolVisitor extends PsiElementVisitor {
 
   public void visitBracketExpr(@NotNull GlagolBracketExpr o) {
     visitExpr(o);
+  }
+
+  public void visitBracketQexpr(@NotNull GlagolBracketQexpr o) {
+    visitQexpr(o);
   }
 
   public void visitBreakStmt(@NotNull GlagolBreakStmt o) {
@@ -115,6 +123,10 @@ public class GlagolVisitor extends PsiElementVisitor {
     visitExpr(o);
   }
 
+  public void visitEqualsQexpr(@NotNull GlagolEqualsQexpr o) {
+    visitQexpr(o);
+  }
+
   public void visitExpr(@NotNull GlagolExpr o) {
     visitPsiElement(o);
   }
@@ -135,6 +147,10 @@ public class GlagolVisitor extends PsiElementVisitor {
     visitStmt(o);
   }
 
+  public void visitGQexpr(@NotNull GlagolGQexpr o) {
+    visitQexpr(o);
+  }
+
   public void visitGet(@NotNull GlagolGet o) {
     visitPsiElement(o);
   }
@@ -143,8 +159,16 @@ public class GlagolVisitor extends PsiElementVisitor {
     visitExpr(o);
   }
 
+  public void visitGtQexpr(@NotNull GlagolGtQexpr o) {
+    visitQexpr(o);
+  }
+
   public void visitGteExpr(@NotNull GlagolGteExpr o) {
     visitExpr(o);
+  }
+
+  public void visitGteQexpr(@NotNull GlagolGteQexpr o) {
+    visitQexpr(o);
   }
 
   public void visitIfStmt(@NotNull GlagolIfStmt o) {
@@ -161,6 +185,14 @@ public class GlagolVisitor extends PsiElementVisitor {
 
   public void visitInvokeFinalExpr(@NotNull GlagolInvokeFinalExpr o) {
     visitExpr(o);
+  }
+
+  public void visitIsNotNullQexpr(@NotNull GlagolIsNotNullQexpr o) {
+    visitQexpr(o);
+  }
+
+  public void visitIsNullQexpr(@NotNull GlagolIsNullQexpr o) {
+    visitQexpr(o);
   }
 
   public void visitListExpr(@NotNull GlagolListExpr o) {
@@ -187,8 +219,16 @@ public class GlagolVisitor extends PsiElementVisitor {
     visitExpr(o);
   }
 
+  public void visitLtQexpr(@NotNull GlagolLtQexpr o) {
+    visitQexpr(o);
+  }
+
   public void visitLteExpr(@NotNull GlagolLteExpr o) {
     visitExpr(o);
+  }
+
+  public void visitLteQexpr(@NotNull GlagolLteQexpr o) {
+    visitQexpr(o);
   }
 
   public void visitMapExpr(@NotNull GlagolMapExpr o) {
@@ -235,8 +275,16 @@ public class GlagolVisitor extends PsiElementVisitor {
     visitExpr(o);
   }
 
+  public void visitNonEqualsQexpr(@NotNull GlagolNonEqualsQexpr o) {
+    visitQexpr(o);
+  }
+
   public void visitOrExpr(@NotNull GlagolOrExpr o) {
     visitExpr(o);
+  }
+
+  public void visitOrQexpr(@NotNull GlagolOrQexpr o) {
+    visitQexpr(o);
   }
 
   public void visitPersistStmt(@NotNull GlagolPersistStmt o) {
@@ -263,7 +311,31 @@ public class GlagolVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitQexpr(@NotNull GlagolQexpr o) {
+    visitPsiElement(o);
+  }
+
   public void visitQualifiedName(@NotNull GlagolQualifiedName o) {
+    visitPsiElement(o);
+  }
+
+  public void visitQueryExpr(@NotNull GlagolQueryExpr o) {
+    visitExpr(o);
+  }
+
+  public void visitQueryField(@NotNull GlagolQueryField o) {
+    visitPsiElement(o);
+  }
+
+  public void visitQueryFieldQexpr(@NotNull GlagolQueryFieldQexpr o) {
+    visitQexpr(o);
+  }
+
+  public void visitQuerySpec(@NotNull GlagolQuerySpec o) {
+    visitPsiElement(o);
+  }
+
+  public void visitQueryStatement(@NotNull GlagolQueryStatement o) {
     visitPsiElement(o);
   }
 

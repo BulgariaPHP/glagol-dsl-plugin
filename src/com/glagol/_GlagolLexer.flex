@@ -30,7 +30,6 @@ INT=[0-9]+
 DECIMAL=[0-9]+\.[0-9]+
 SYMBOL_NAME=[A-Z][a-zA-Z_0-9]*
 BOOLEAN=true|false
-REL_DIR=one|many
 ID=[a-z][a-zA-Z]*
 STRING=('([^'\\]|\\.)*'|\"([^\"\\]|\\\"|\\'|\\)*\")
 LINE_COMMENT="//".*
@@ -58,6 +57,8 @@ BLOCK_COMMENT="/"\*([^])*\*"/"
   "*"                  { return G_ASTERIX; }
   "%"                  { return G_PERCENT; }
   "/"                  { return G_SLASH; }
+  "<<"                 { return G_QEXPR_START; }
+  ">>"                 { return G_QEXPR_END; }
   "<"                  { return G_LT; }
   ">"                  { return G_GT; }
   "<="                 { return G_LTE; }
@@ -96,6 +97,20 @@ BLOCK_COMMENT="/"\*([^])*\*"/"
   "controller"         { return G_KW_CONTROLLER; }
   "service"            { return G_KW_SERVICE; }
   "util"               { return G_KW_UTIL; }
+  "SELECT"             { return G_KW_SELECT; }
+  "FROM"               { return G_KW_FROM; }
+  "WHERE"              { return G_KW_WHERE; }
+  "ORDER"              { return G_KW_ORDER; }
+  "BY"                 { return G_KW_BY; }
+  "LIMIT"              { return G_KW_LIMIT; }
+  "OFFSET"             { return G_KW_OFFSET; }
+  "DESC"               { return G_KW_DESC; }
+  "ASC"                { return G_KW_ASC; }
+  "IS"                 { return G_KW_IS; }
+  "NOT"                { return G_KW_NOT; }
+  "NULL"               { return G_KW_NULL; }
+  "AND"                { return G_KW_AND; }
+  "OR"                 { return G_KW_OR; }
   "string"             { return G_TYPE_STRING; }
   "int"                { return G_TYPE_INT; }
   "float"              { return G_TYPE_FLOAT; }
@@ -106,7 +121,6 @@ BLOCK_COMMENT="/"\*([^])*\*"/"
   {DECIMAL}            { return G_DECIMAL; }
   {SYMBOL_NAME}        { return G_SYMBOL_NAME; }
   {BOOLEAN}            { return G_BOOLEAN; }
-  {REL_DIR}            { return G_REL_DIR; }
   {ID}                 { return G_ID; }
   {STRING}             { return G_STRING; }
   {LINE_COMMENT}       { return G_LINE_COMMENT; }

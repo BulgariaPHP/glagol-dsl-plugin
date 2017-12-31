@@ -137,8 +137,20 @@ public class GlagolParser implements PsiParser, LightPsiParser {
     else if (t == G_PROPERTY_DEFAULT_VALUE) {
       r = property_default_value(b, 0);
     }
+    else if (t == G_QEXPR) {
+      r = qexpr(b, 0, -1);
+    }
     else if (t == G_QUALIFIED_NAME) {
       r = qualified_name(b, 0);
+    }
+    else if (t == G_QUERY_FIELD) {
+      r = query_field(b, 0);
+    }
+    else if (t == G_QUERY_SPEC) {
+      r = query_spec(b, 0);
+    }
+    else if (t == G_QUERY_STATEMENT) {
+      r = query_statement(b, 0);
     }
     else if (t == G_REMOVE_STMT) {
       r = remove_stmt(b, 0);
@@ -172,14 +184,19 @@ public class GlagolParser implements PsiParser, LightPsiParser {
       G_DECLARE_STMT, G_EMPTY_STMT, G_EXPR_STMT, G_FLUSH_STMT,
       G_FOREACH_STMT, G_IF_STMT, G_PERSIST_STMT, G_REMOVE_STMT,
       G_RETURN_STMT, G_STMT),
+    create_token_set_(G_AND_QEXPR, G_BRACKET_QEXPR, G_EQUALS_QEXPR, G_GTE_QEXPR,
+      G_GT_QEXPR, G_G_QEXPR, G_IS_NOT_NULL_QEXPR, G_IS_NULL_QEXPR,
+      G_LTE_QEXPR, G_LT_QEXPR, G_NON_EQUALS_QEXPR, G_OR_QEXPR,
+      G_QEXPR, G_QUERY_FIELD_QEXPR),
     create_token_set_(G_AND_EXPR, G_BRACKET_EXPR, G_CAST_EXPR, G_DIVISION_EXPR,
       G_EQ_EXPR, G_EXPR, G_FIELD_EXPR, G_GTE_EXPR,
       G_GT_EXPR, G_INVOKE_EXPR, G_INVOKE_FINAL_EXPR, G_LIST_EXPR,
       G_LIST_SEQ_EXPR, G_LITERAL_EXPR, G_LTE_EXPR, G_LT_EXPR,
       G_MAP_EXPR, G_MAP_PAIR_EXPR, G_MAP_SEQ_EXPR, G_MINUS_EXPR,
       G_NEGATIVE_EXPR, G_NEW_EXPR, G_NON_EQ_EXPR, G_OR_EXPR,
-      G_PLUS_EXPR, G_POSITIVE_EXPR, G_PRODUCT_EXPR, G_REMAINDER_EXPR,
-      G_SEQ_EXPR, G_TERNARY_EXPR, G_THIS_EXPR, G_VARIABLE_EXPR),
+      G_PLUS_EXPR, G_POSITIVE_EXPR, G_PRODUCT_EXPR, G_QUERY_EXPR,
+      G_REMAINDER_EXPR, G_SEQ_EXPR, G_TERNARY_EXPR, G_THIS_EXPR,
+      G_VARIABLE_EXPR),
   };
 
   /* ********************************************************** */
@@ -589,7 +606,7 @@ public class GlagolParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // symbol_name '(' abstract_parameters? ')' block_stmt guard?
+  // SYMBOL_NAME '(' abstract_parameters? ')' block_stmt guard?
   public static boolean constructor(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "constructor")) return false;
     if (!nextTokenIs(b, G_SYMBOL_NAME)) return false;
@@ -682,7 +699,7 @@ public class GlagolParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // 'entity' symbol_name '{' member* '}'
+  // 'entity' SYMBOL_NAME '{' member* '}'
   public static boolean decl_entity(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "decl_entity")) return false;
     if (!nextTokenIs(b, G_KW_ENTITY)) return false;
@@ -708,7 +725,7 @@ public class GlagolParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // 'repository' 'for' symbol_name '{' member* '}'
+  // 'repository' 'for' SYMBOL_NAME '{' member* '}'
   public static boolean decl_repo(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "decl_repo")) return false;
     if (!nextTokenIs(b, G_KW_REPOSITORY)) return false;
@@ -734,7 +751,7 @@ public class GlagolParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ('util' | 'service') symbol_name '{' member* '}'
+  // ('util' | 'service') SYMBOL_NAME '{' member* '}'
   public static boolean decl_util(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "decl_util")) return false;
     if (!nextTokenIs(b, "<decl util>", G_KW_SERVICE, G_KW_UTIL)) return false;
@@ -772,7 +789,7 @@ public class GlagolParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // 'value' symbol_name '{' member* '}'
+  // 'value' SYMBOL_NAME '{' member* '}'
   public static boolean decl_value(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "decl_value")) return false;
     if (!nextTokenIs(b, G_KW_VALUE)) return false;
@@ -1234,7 +1251,7 @@ public class GlagolParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // 'import' qualified_name ('as' symbol_name)? ';'
+  // 'import' qualified_name ('as' SYMBOL_NAME)? ';'
   public static boolean import_artifact(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "import_artifact")) return false;
     if (!nextTokenIs(b, G_KW_IMPORT)) return false;
@@ -1248,14 +1265,14 @@ public class GlagolParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // ('as' symbol_name)?
+  // ('as' SYMBOL_NAME)?
   private static boolean import_artifact_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "import_artifact_2")) return false;
     import_artifact_2_0(b, l + 1);
     return true;
   }
 
-  // 'as' symbol_name
+  // 'as' SYMBOL_NAME
   private static boolean import_artifact_2_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "import_artifact_2_0")) return false;
     boolean r;
@@ -1675,7 +1692,7 @@ public class GlagolParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // symbol_name ('::' symbol_name)*
+  // SYMBOL_NAME ('::' SYMBOL_NAME)*
   public static boolean qualified_name(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "qualified_name")) return false;
     if (!nextTokenIs(b, G_SYMBOL_NAME)) return false;
@@ -1687,7 +1704,7 @@ public class GlagolParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // ('::' symbol_name)*
+  // ('::' SYMBOL_NAME)*
   private static boolean qualified_name_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "qualified_name_1")) return false;
     int c = current_position_(b);
@@ -1699,12 +1716,255 @@ public class GlagolParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // '::' symbol_name
+  // '::' SYMBOL_NAME
   private static boolean qualified_name_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "qualified_name_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, G_DOUBLE_COLON, G_SYMBOL_NAME);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // id '.' id
+  public static boolean query_field(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "query_field")) return false;
+    if (!nextTokenIs(b, G_ID)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, G_ID, G_DOT, G_ID);
+    exit_section_(b, m, G_QUERY_FIELD, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // "LIMIT" qexpr | "LIMIT" qexpr "OFFSET" qexpr | "LIMIT" qexpr "," qexpr
+  static boolean query_limit(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "query_limit")) return false;
+    if (!nextTokenIs(b, G_KW_LIMIT)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = query_limit_0(b, l + 1);
+    if (!r) r = query_limit_1(b, l + 1);
+    if (!r) r = query_limit_2(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // "LIMIT" qexpr
+  private static boolean query_limit_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "query_limit_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, G_KW_LIMIT);
+    r = r && qexpr(b, l + 1, -1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // "LIMIT" qexpr "OFFSET" qexpr
+  private static boolean query_limit_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "query_limit_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, G_KW_LIMIT);
+    r = r && qexpr(b, l + 1, -1);
+    r = r && consumeToken(b, G_KW_OFFSET);
+    r = r && qexpr(b, l + 1, -1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // "LIMIT" qexpr "," qexpr
+  private static boolean query_limit_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "query_limit_2")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, G_KW_LIMIT);
+    r = r && qexpr(b, l + 1, -1);
+    r = r && consumeToken(b, G_COMMA);
+    r = r && qexpr(b, l + 1, -1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // "ORDER" "BY" (query_order_by_field ',')* query_order_by_field
+  static boolean query_order_by(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "query_order_by")) return false;
+    if (!nextTokenIs(b, G_KW_ORDER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, G_KW_ORDER, G_KW_BY);
+    r = r && query_order_by_2(b, l + 1);
+    r = r && query_order_by_field(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (query_order_by_field ',')*
+  private static boolean query_order_by_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "query_order_by_2")) return false;
+    int c = current_position_(b);
+    while (true) {
+      if (!query_order_by_2_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "query_order_by_2", c)) break;
+      c = current_position_(b);
+    }
+    return true;
+  }
+
+  // query_order_by_field ','
+  private static boolean query_order_by_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "query_order_by_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = query_order_by_field(b, l + 1);
+    r = r && consumeToken(b, G_COMMA);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // query_field | query_field "ASC" | query_field "DESC"
+  static boolean query_order_by_field(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "query_order_by_field")) return false;
+    if (!nextTokenIs(b, G_ID)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = query_field(b, l + 1);
+    if (!r) r = query_order_by_field_1(b, l + 1);
+    if (!r) r = query_order_by_field_2(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // query_field "ASC"
+  private static boolean query_order_by_field_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "query_order_by_field_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = query_field(b, l + 1);
+    r = r && consumeToken(b, G_KW_ASC);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // query_field "DESC"
+  private static boolean query_order_by_field_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "query_order_by_field_2")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = query_field(b, l + 1);
+    r = r && consumeToken(b, G_KW_DESC);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // "SELECT" query_spec "FROM" query_source query_where? query_order_by? query_limit?
+  static boolean query_select(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "query_select")) return false;
+    if (!nextTokenIs(b, G_KW_SELECT)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, G_KW_SELECT);
+    r = r && query_spec(b, l + 1);
+    r = r && consumeToken(b, G_KW_FROM);
+    r = r && query_source(b, l + 1);
+    r = r && query_select_4(b, l + 1);
+    r = r && query_select_5(b, l + 1);
+    r = r && query_select_6(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // query_where?
+  private static boolean query_select_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "query_select_4")) return false;
+    query_where(b, l + 1);
+    return true;
+  }
+
+  // query_order_by?
+  private static boolean query_select_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "query_select_5")) return false;
+    query_order_by(b, l + 1);
+    return true;
+  }
+
+  // query_limit?
+  private static boolean query_select_6(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "query_select_6")) return false;
+    query_limit(b, l + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // SYMBOL_NAME id | SYMBOL_NAME "as" id
+  static boolean query_source(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "query_source")) return false;
+    if (!nextTokenIs(b, G_SYMBOL_NAME)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = parseTokens(b, 0, G_SYMBOL_NAME, G_ID);
+    if (!r) r = parseTokens(b, 0, G_SYMBOL_NAME, G_KW_ALIAS, G_ID);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // id ('[' ']')?
+  public static boolean query_spec(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "query_spec")) return false;
+    if (!nextTokenIs(b, G_ID)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, G_ID);
+    r = r && query_spec_1(b, l + 1);
+    exit_section_(b, m, G_QUERY_SPEC, r);
+    return r;
+  }
+
+  // ('[' ']')?
+  private static boolean query_spec_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "query_spec_1")) return false;
+    query_spec_1_0(b, l + 1);
+    return true;
+  }
+
+  // '[' ']'
+  private static boolean query_spec_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "query_spec_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, G_LEFT_BRACKET, G_RIGHT_BRACKET);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // query_select
+  public static boolean query_statement(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "query_statement")) return false;
+    if (!nextTokenIs(b, G_KW_SELECT)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = query_select(b, l + 1);
+    exit_section_(b, m, G_QUERY_STATEMENT, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // "WHERE" qexpr
+  static boolean query_where(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "query_where")) return false;
+    if (!nextTokenIs(b, G_KW_WHERE)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, G_KW_WHERE);
+    r = r && qexpr(b, l + 1, -1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -1962,6 +2222,7 @@ public class GlagolParser implements PsiParser, LightPsiParser {
   //    BINARY(eq_expr) BINARY(non_eq_expr)
   // 16: BINARY(and_expr) BINARY(or_expr)
   // 17: BINARY(ternary_expr)
+  // 18: ATOM(query_expr)
   public static boolean expr(PsiBuilder b, int l, int g) {
     if (!recursion_guard_(b, l, "expr")) return false;
     addVariant(b, "<expr>");
@@ -1978,6 +2239,7 @@ public class GlagolParser implements PsiParser, LightPsiParser {
     if (!r) r = variable_expr(b, l + 1);
     if (!r) r = new_expr(b, l + 1);
     if (!r) r = this_expr(b, l + 1);
+    if (!r) r = query_expr(b, l + 1);
     p = r;
     r = r && expr_0(b, l + 1, g);
     exit_section_(b, l, m, null, r, p, null);
@@ -2213,7 +2475,7 @@ public class GlagolParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // 'new' symbol_name '(' seq_expr? ')'
+  // 'new' SYMBOL_NAME '(' seq_expr? ')'
   public static boolean new_expr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "new_expr")) return false;
     if (!nextTokenIsSmart(b, G_KW_NEW)) return false;
@@ -2252,6 +2514,137 @@ public class GlagolParser implements PsiParser, LightPsiParser {
     r = consumeTokenFast(b, G_COLON);
     r = r && expr(b, l + 1, -1);
     exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // query_statement
+  public static boolean query_expr(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "query_expr")) return false;
+    if (!nextTokenIsSmart(b, G_KW_SELECT)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = query_statement(b, l + 1);
+    exit_section_(b, m, G_QUERY_EXPR, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // Expression root: qexpr
+  // Operator priority table:
+  // 0: PREFIX(bracket_qexpr)
+  // 1: BINARY(equals_qexpr)
+  // 2: BINARY(non_equals_qexpr)
+  // 3: BINARY(gt_qexpr)
+  // 4: BINARY(gte_qexpr)
+  // 5: BINARY(lt_qexpr)
+  // 6: BINARY(lte_qexpr)
+  // 7: POSTFIX(is_null_qexpr)
+  // 8: POSTFIX(is_not_null_qexpr)
+  // 9: BINARY(and_qexpr)
+  // 10: BINARY(or_qexpr)
+  // 11: ATOM(g_qexpr)
+  // 12: ATOM(query_field_qexpr)
+  public static boolean qexpr(PsiBuilder b, int l, int g) {
+    if (!recursion_guard_(b, l, "qexpr")) return false;
+    addVariant(b, "<qexpr>");
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, "<qexpr>");
+    r = bracket_qexpr(b, l + 1);
+    if (!r) r = g_qexpr(b, l + 1);
+    if (!r) r = query_field_qexpr(b, l + 1);
+    p = r;
+    r = r && qexpr_0(b, l + 1, g);
+    exit_section_(b, l, m, null, r, p, null);
+    return r || p;
+  }
+
+  public static boolean qexpr_0(PsiBuilder b, int l, int g) {
+    if (!recursion_guard_(b, l, "qexpr_0")) return false;
+    boolean r = true;
+    while (true) {
+      Marker m = enter_section_(b, l, _LEFT_, null);
+      if (g < 1 && consumeTokenSmart(b, G_OP_EQ)) {
+        r = qexpr(b, l, 1);
+        exit_section_(b, l, m, G_EQUALS_QEXPR, r, true, null);
+      }
+      else if (g < 2 && consumeTokenSmart(b, G_NON_EQ)) {
+        r = qexpr(b, l, 2);
+        exit_section_(b, l, m, G_NON_EQUALS_QEXPR, r, true, null);
+      }
+      else if (g < 3 && consumeTokenSmart(b, G_GT)) {
+        r = qexpr(b, l, 3);
+        exit_section_(b, l, m, G_GT_QEXPR, r, true, null);
+      }
+      else if (g < 4 && consumeTokenSmart(b, G_GTE)) {
+        r = qexpr(b, l, 4);
+        exit_section_(b, l, m, G_GTE_QEXPR, r, true, null);
+      }
+      else if (g < 5 && consumeTokenSmart(b, G_LT)) {
+        r = qexpr(b, l, 5);
+        exit_section_(b, l, m, G_LT_QEXPR, r, true, null);
+      }
+      else if (g < 6 && consumeTokenSmart(b, G_LTE)) {
+        r = qexpr(b, l, 6);
+        exit_section_(b, l, m, G_LTE_QEXPR, r, true, null);
+      }
+      else if (g < 7 && parseTokensSmart(b, 0, G_KW_IS, G_KW_NULL)) {
+        r = true;
+        exit_section_(b, l, m, G_IS_NULL_QEXPR, r, true, null);
+      }
+      else if (g < 8 && parseTokensSmart(b, 0, G_KW_IS, G_KW_NOT, G_KW_NULL)) {
+        r = true;
+        exit_section_(b, l, m, G_IS_NOT_NULL_QEXPR, r, true, null);
+      }
+      else if (g < 9 && consumeTokenSmart(b, G_KW_AND)) {
+        r = qexpr(b, l, 9);
+        exit_section_(b, l, m, G_AND_QEXPR, r, true, null);
+      }
+      else if (g < 10 && consumeTokenSmart(b, G_KW_OR)) {
+        r = qexpr(b, l, 10);
+        exit_section_(b, l, m, G_OR_QEXPR, r, true, null);
+      }
+      else {
+        exit_section_(b, l, m, null, false, false, null);
+        break;
+      }
+    }
+    return r;
+  }
+
+  public static boolean bracket_qexpr(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "bracket_qexpr")) return false;
+    if (!nextTokenIsSmart(b, G_LEFT_PAREN)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, null);
+    r = consumeTokenSmart(b, G_LEFT_PAREN);
+    p = r;
+    r = p && qexpr(b, l, 0);
+    r = p && report_error_(b, consumeToken(b, G_RIGHT_PAREN)) && r;
+    exit_section_(b, l, m, G_BRACKET_QEXPR, r, p, null);
+    return r || p;
+  }
+
+  // '<<' expr '>>'
+  public static boolean g_qexpr(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "g_qexpr")) return false;
+    if (!nextTokenIsSmart(b, G_QEXPR_START)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokenSmart(b, G_QEXPR_START);
+    r = r && expr(b, l + 1, -1);
+    r = r && consumeToken(b, G_QEXPR_END);
+    exit_section_(b, m, G_G_QEXPR, r);
+    return r;
+  }
+
+  // query_field
+  public static boolean query_field_qexpr(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "query_field_qexpr")) return false;
+    if (!nextTokenIsSmart(b, G_ID)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = query_field(b, l + 1);
+    exit_section_(b, m, G_QUERY_FIELD_QEXPR, r);
     return r;
   }
 
@@ -2328,7 +2721,7 @@ public class GlagolParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // 'repository' '<' symbol_name '>'
+  // 'repository' '<' SYMBOL_NAME '>'
   public static boolean repository_type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "repository_type")) return false;
     if (!nextTokenIsSmart(b, G_KW_REPOSITORY)) return false;
@@ -2339,7 +2732,7 @@ public class GlagolParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // symbol_name
+  // SYMBOL_NAME
   public static boolean artifact_type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "artifact_type")) return false;
     if (!nextTokenIsSmart(b, G_SYMBOL_NAME)) return false;

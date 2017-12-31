@@ -17,7 +17,8 @@
   psiImplUtilClass="com.glagol.psi.impl.GlagolPsiImplUtil"
 
   extends(".*type")=type
-  extends(".*expr")=expr
+  extends(".*_expr")=expr
+  extends(".*_qexpr")=qexpr
   extends(".*stmt")=stmt
 
 
@@ -44,6 +45,8 @@
     ASTERIX="*"
     PERCENT="%"
     SLASH="/"
+    QEXPR_START="<<"
+    QEXPR_END=">>"
     LT="<"
     GT=">"
     LTE="<="
@@ -83,6 +86,20 @@
     KW_CONTROLLER="controller"
     KW_SERVICE="service"
     KW_UTIL="util"
+    KW_SELECT="SELECT"
+    KW_FROM="FROM"
+    KW_WHERE="WHERE"
+    KW_ORDER="ORDER"
+    KW_BY="BY"
+    KW_LIMIT="LIMIT"
+    KW_OFFSET="OFFSET"
+    KW_DESC="DESC"
+    KW_ASC="ASC"
+    KW_IS="IS"
+    KW_NOT="NOT"
+    KW_NULL="NULL"
+    KW_AND="AND"
+    KW_OR="OR"
 
     TYPE_STRING="string"
     TYPE_INT="int"
@@ -92,9 +109,8 @@
 
     int="regexp:\d+"
     decimal="regexp:\d+\.\d+"
-    symbol_name="regexp:[A-Z]\w*"
+    SYMBOL_NAME="regexp:[A-Z]\w*"
     boolean="regexp:true|false"
-    rel_dir="regexp:one|many"
     id="regexp:[a-z][a-zA-Z]*"
     string="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\\"|\\\'|\\)*\")"
     line_comment="regexp://.*"
@@ -104,16 +120,16 @@
 
 root ::= !<<eof>> annotation* 'namespace' qualified_name import_artifact* declaration?
 
-qualified_name ::= symbol_name ('::' symbol_name)*
+qualified_name ::= SYMBOL_NAME ('::' SYMBOL_NAME)*
 
-import_artifact ::= 'import' qualified_name ('as' symbol_name)? ';'
+import_artifact ::= 'import' qualified_name ('as' SYMBOL_NAME)? ';'
 
 declaration ::= annotation* (decl_entity | decl_value | decl_repo | decl_controller | decl_util)
 
-decl_entity ::= 'entity' symbol_name '{' member* '}'
-decl_value ::= 'value' symbol_name '{' member* '}'
-decl_repo ::= 'repository' 'for' symbol_name '{' member* '}'
-decl_util ::= ('util' | 'service') symbol_name '{' member* '}'
+decl_entity ::= 'entity' SYMBOL_NAME '{' member* '}'
+decl_value ::= 'value' SYMBOL_NAME '{' member* '}'
+decl_repo ::= 'repository' 'for' SYMBOL_NAME '{' member* '}'
+decl_util ::= ('util' | 'service') SYMBOL_NAME '{' member* '}'
 decl_controller ::= controller_type 'controller' route '{' member* '}'
 
 private controller_type ::= 'rest' | 'json-api'
@@ -136,7 +152,7 @@ member ::= annotation* (property | constructor | method | action)
 property ::= type id ('=' property_default_value)? ';'
 property_default_value ::= default_value
 
-constructor ::= symbol_name '(' abstract_parameters? ')' block_stmt guard?
+constructor ::= SYMBOL_NAME '(' abstract_parameters? ')' block_stmt guard?
 
 method ::= (modifier type id '(' abstract_parameters? ')' block_stmt guard?)
          | (modifier type id '(' abstract_parameters? ')' '=' expr guard)
@@ -209,8 +225,8 @@ selfie_type ::= 'selfie'
 scalar_type ::= TYPE_BOOL | TYPE_FLOAT | TYPE_INT | TYPE_STRING | TYPE_VOID
 list_type ::= type '[' ']'
 map_type ::= '{' type ',' type '}'
-repository_type ::= 'repository' '<' symbol_name '>'
-artifact_type ::= symbol_name
+repository_type ::= 'repository' '<' SYMBOL_NAME '>'
+artifact_type ::= SYMBOL_NAME
 
 expr ::= cast_expr
        | bracket_expr
@@ -230,6 +246,7 @@ expr ::= cast_expr
        | bin_rel_group
        | bin_logic_group
        | ternary_expr
+       | query_expr
 
 
 private bin_logic_group ::= and_expr | or_expr
@@ -265,7 +282,51 @@ invoke_expr ::= expr '.' invoke_final_expr
 invoke_final_expr ::= id '(' seq_expr? ')'
 field_expr ::= expr '.' id
 variable_expr ::= id
-new_expr ::= 'new' symbol_name '(' seq_expr? ')'
+new_expr ::= 'new' SYMBOL_NAME '(' seq_expr? ')'
 bracket_expr ::= '(' expr ')'
 this_expr ::= 'this'
 cast_expr ::= '(' type ')' expr
+query_expr ::= query_statement
+
+query_statement ::= query_select
+
+private query_select ::= "SELECT" query_spec "FROM" query_source query_where? query_order_by? query_limit?
+
+query_spec ::= id ('[' ']')?
+
+private query_source ::= SYMBOL_NAME id | SYMBOL_NAME "as" id
+private query_where ::= "WHERE" qexpr
+
+qexpr ::= bracket_qexpr
+        | equals_qexpr
+        | non_equals_qexpr
+        | gt_qexpr
+        | gte_qexpr
+        | lt_qexpr
+        | lte_qexpr
+        | is_null_qexpr
+        | is_not_null_qexpr
+        | and_qexpr
+        | or_qexpr
+        | g_qexpr
+        | query_field_qexpr
+
+bracket_qexpr ::= "(" qexpr ")"
+equals_qexpr ::= qexpr "=" qexpr
+non_equals_qexpr ::= qexpr "!=" qexpr
+gt_qexpr ::= qexpr ">" qexpr
+gte_qexpr ::= qexpr ">=" qexpr
+lt_qexpr ::= qexpr "<" qexpr
+lte_qexpr ::= qexpr "<=" qexpr
+is_null_qexpr ::= qexpr "IS" "NULL"
+is_not_null_qexpr ::= qexpr "IS" "NOT" "NULL"
+and_qexpr ::= qexpr "AND" qexpr
+or_qexpr ::= qexpr "OR" qexpr
+g_qexpr ::= '<<' expr '>>'
+query_field_qexpr ::= query_field
+
+query_field ::= id '.' id
+
+private query_order_by ::= "ORDER" "BY" (query_order_by_field ',')* query_order_by_field
+private query_order_by_field ::= query_field | query_field "ASC" | query_field "DESC"
+private query_limit ::= "LIMIT" qexpr | "LIMIT" qexpr "OFFSET" qexpr | "LIMIT" qexpr "," qexpr

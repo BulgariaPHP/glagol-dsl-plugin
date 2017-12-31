@@ -31,7 +31,11 @@ public class GlagolParserDefinition implements ParserDefinition {
             GlagolTypes.G_KW_FLUSH, GlagolTypes.G_KW_REMOVE, GlagolTypes.G_KW_BREAK,
             GlagolTypes.G_KW_CONTINUE, GlagolTypes.G_KW_PUBLIC, GlagolTypes.G_KW_PRIVATE,
             GlagolTypes.G_TYPE_VOID, GlagolTypes.G_KW_REST, GlagolTypes.G_KW_JSON_API,
-            GlagolTypes.G_KW_CONTROLLER, GlagolTypes.G_KW_UTIL, GlagolTypes.G_KW_SERVICE
+            GlagolTypes.G_KW_CONTROLLER, GlagolTypes.G_KW_UTIL, GlagolTypes.G_KW_SERVICE,
+            GlagolTypes.G_KW_SELECT, GlagolTypes.G_KW_FROM, GlagolTypes.G_KW_WHERE, GlagolTypes.G_KW_ORDER,
+            GlagolTypes.G_KW_BY, GlagolTypes.G_KW_LIMIT, GlagolTypes.G_KW_OFFSET, GlagolTypes.G_KW_AND,
+            GlagolTypes.G_KW_OR, GlagolTypes.G_KW_IS, GlagolTypes.G_KW_NOT, GlagolTypes.G_KW_NULL, GlagolTypes.G_KW_ASC,
+            GlagolTypes.G_KW_DESC
     );
 
     public static final TokenSet OPERATORS = TokenSet.create(
