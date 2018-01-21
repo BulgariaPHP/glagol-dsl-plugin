@@ -1,17 +1,18 @@
 <idea-plugin>
   <id>com.glagol</id>
   <name>Glagol DSL</name>
-  <version>1.1</version>
-  <vendor email="joan.grigorov@gmail.com" url="http://glagol-dsl.github.io">Bulgaria PHP User Group</vendor>
+  <version>1.2</version>
+  <vendor email="joan.grigorov@gmail.com" url="http://glagol-dsl-docs.readthedocs.io">Bulgaria PHP User Group</vendor>
 
   <description><![CDATA[
       Syntax highlighting and language support for Glagol DSL
     ]]></description>
 
   <change-notes><![CDATA[
-      Added type casting grammar
-      Fixed platform installation bug
-      Added syntax highlighting
+      <ul>
+        <li>Added Glagol Query Language grammar</li>
+        <li>Added better syntax highlighting for annotation</li>
+      </ul>
     ]]>
   </change-notes>
 
