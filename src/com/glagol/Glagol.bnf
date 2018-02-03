@@ -40,6 +40,7 @@
     RIGHT_PAREN=")"
     AT="@"
     MINUS="-"
+    CONCAT="++"
     PLUS="+"
     DOT="."
     ASTERIX="*"
@@ -243,6 +244,7 @@ expr ::= cast_expr
        | mul_group
        | add_group
        | remainder_expr
+       | concat_expr
        | bin_rel_group
        | bin_logic_group
        | ternary_expr
@@ -255,6 +257,7 @@ private add_group ::= plus_expr | minus_expr
 private mul_group ::= product_expr | division_expr
 private invoke_group ::= invoke_expr | invoke_final_expr
 
+concat_expr ::= expr '++' expr
 ternary_expr ::= expr '?' expr ':' expr
 and_expr ::= expr '&&' expr
 or_expr ::= expr '||' expr

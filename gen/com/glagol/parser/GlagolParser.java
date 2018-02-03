@@ -188,15 +188,15 @@ public class GlagolParser implements PsiParser, LightPsiParser {
       G_GT_QEXPR, G_G_QEXPR, G_IS_NOT_NULL_QEXPR, G_IS_NULL_QEXPR,
       G_LTE_QEXPR, G_LT_QEXPR, G_NON_EQUALS_QEXPR, G_OR_QEXPR,
       G_QEXPR, G_QUERY_FIELD_QEXPR),
-    create_token_set_(G_AND_EXPR, G_BRACKET_EXPR, G_CAST_EXPR, G_DIVISION_EXPR,
-      G_EQ_EXPR, G_EXPR, G_FIELD_EXPR, G_GTE_EXPR,
-      G_GT_EXPR, G_INVOKE_EXPR, G_INVOKE_FINAL_EXPR, G_LIST_EXPR,
-      G_LIST_SEQ_EXPR, G_LITERAL_EXPR, G_LTE_EXPR, G_LT_EXPR,
-      G_MAP_EXPR, G_MAP_PAIR_EXPR, G_MAP_SEQ_EXPR, G_MINUS_EXPR,
-      G_NEGATIVE_EXPR, G_NEW_EXPR, G_NON_EQ_EXPR, G_OR_EXPR,
-      G_PLUS_EXPR, G_POSITIVE_EXPR, G_PRODUCT_EXPR, G_QUERY_EXPR,
-      G_REMAINDER_EXPR, G_SEQ_EXPR, G_TERNARY_EXPR, G_THIS_EXPR,
-      G_VARIABLE_EXPR),
+    create_token_set_(G_AND_EXPR, G_BRACKET_EXPR, G_CAST_EXPR, G_CONCAT_EXPR,
+      G_DIVISION_EXPR, G_EQ_EXPR, G_EXPR, G_FIELD_EXPR,
+      G_GTE_EXPR, G_GT_EXPR, G_INVOKE_EXPR, G_INVOKE_FINAL_EXPR,
+      G_LIST_EXPR, G_LIST_SEQ_EXPR, G_LITERAL_EXPR, G_LTE_EXPR,
+      G_LT_EXPR, G_MAP_EXPR, G_MAP_PAIR_EXPR, G_MAP_SEQ_EXPR,
+      G_MINUS_EXPR, G_NEGATIVE_EXPR, G_NEW_EXPR, G_NON_EQ_EXPR,
+      G_OR_EXPR, G_PLUS_EXPR, G_POSITIVE_EXPR, G_PRODUCT_EXPR,
+      G_QUERY_EXPR, G_REMAINDER_EXPR, G_SEQ_EXPR, G_TERNARY_EXPR,
+      G_THIS_EXPR, G_VARIABLE_EXPR),
   };
 
   /* ********************************************************** */
@@ -2218,11 +2218,12 @@ public class GlagolParser implements PsiParser, LightPsiParser {
   // 12: BINARY(product_expr) BINARY(division_expr)
   // 13: BINARY(plus_expr) BINARY(minus_expr)
   // 14: BINARY(remainder_expr)
-  // 15: BINARY(lt_expr) BINARY(lte_expr) BINARY(gt_expr) BINARY(gte_expr)
+  // 15: BINARY(concat_expr)
+  // 16: BINARY(lt_expr) BINARY(lte_expr) BINARY(gt_expr) BINARY(gte_expr)
   //    BINARY(eq_expr) BINARY(non_eq_expr)
-  // 16: BINARY(and_expr) BINARY(or_expr)
-  // 17: BINARY(ternary_expr)
-  // 18: ATOM(query_expr)
+  // 17: BINARY(and_expr) BINARY(or_expr)
+  // 18: BINARY(ternary_expr)
+  // 19: ATOM(query_expr)
   public static boolean expr(PsiBuilder b, int l, int g) {
     if (!recursion_guard_(b, l, "expr")) return false;
     addVariant(b, "<expr>");
@@ -2279,40 +2280,44 @@ public class GlagolParser implements PsiParser, LightPsiParser {
         r = expr(b, l, 14);
         exit_section_(b, l, m, G_REMAINDER_EXPR, r, true, null);
       }
-      else if (g < 15 && consumeTokenSmart(b, G_LT)) {
+      else if (g < 15 && consumeTokenSmart(b, G_CONCAT)) {
         r = expr(b, l, 15);
+        exit_section_(b, l, m, G_CONCAT_EXPR, r, true, null);
+      }
+      else if (g < 16 && consumeTokenSmart(b, G_LT)) {
+        r = expr(b, l, 16);
         exit_section_(b, l, m, G_LT_EXPR, r, true, null);
       }
-      else if (g < 15 && consumeTokenSmart(b, G_LTE)) {
-        r = expr(b, l, 15);
+      else if (g < 16 && consumeTokenSmart(b, G_LTE)) {
+        r = expr(b, l, 16);
         exit_section_(b, l, m, G_LTE_EXPR, r, true, null);
       }
-      else if (g < 15 && consumeTokenSmart(b, G_GT)) {
-        r = expr(b, l, 15);
+      else if (g < 16 && consumeTokenSmart(b, G_GT)) {
+        r = expr(b, l, 16);
         exit_section_(b, l, m, G_GT_EXPR, r, true, null);
       }
-      else if (g < 15 && consumeTokenSmart(b, G_GTE)) {
-        r = expr(b, l, 15);
+      else if (g < 16 && consumeTokenSmart(b, G_GTE)) {
+        r = expr(b, l, 16);
         exit_section_(b, l, m, G_GTE_EXPR, r, true, null);
       }
-      else if (g < 15 && consumeTokenSmart(b, G_EQ)) {
-        r = expr(b, l, 15);
+      else if (g < 16 && consumeTokenSmart(b, G_EQ)) {
+        r = expr(b, l, 16);
         exit_section_(b, l, m, G_EQ_EXPR, r, true, null);
       }
-      else if (g < 15 && consumeTokenSmart(b, G_NON_EQ)) {
-        r = expr(b, l, 15);
+      else if (g < 16 && consumeTokenSmart(b, G_NON_EQ)) {
+        r = expr(b, l, 16);
         exit_section_(b, l, m, G_NON_EQ_EXPR, r, true, null);
       }
-      else if (g < 16 && consumeTokenSmart(b, G_AND)) {
-        r = expr(b, l, 16);
+      else if (g < 17 && consumeTokenSmart(b, G_AND)) {
+        r = expr(b, l, 17);
         exit_section_(b, l, m, G_AND_EXPR, r, true, null);
       }
-      else if (g < 16 && consumeTokenSmart(b, G_OR)) {
-        r = expr(b, l, 16);
+      else if (g < 17 && consumeTokenSmart(b, G_OR)) {
+        r = expr(b, l, 17);
         exit_section_(b, l, m, G_OR_EXPR, r, true, null);
       }
-      else if (g < 17 && consumeTokenSmart(b, G_QUESTION_MARK)) {
-        r = report_error_(b, expr(b, l, 17));
+      else if (g < 18 && consumeTokenSmart(b, G_QUESTION_MARK)) {
+        r = report_error_(b, expr(b, l, 18));
         r = ternary_expr_1(b, l + 1) && r;
         exit_section_(b, l, m, G_TERNARY_EXPR, r, true, null);
       }

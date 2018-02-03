@@ -51,6 +51,10 @@ public class GlagolVisitor extends PsiElementVisitor {
     visitExpr(o);
   }
 
+  public void visitConcatExpr(@NotNull GlagolConcatExpr o) {
+    visitExpr(o);
+  }
+
   public void visitConstructor(@NotNull GlagolConstructor o) {
     visitPsiElement(o);
   }

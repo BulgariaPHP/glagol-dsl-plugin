@@ -19,6 +19,7 @@ public interface GlagolTypes {
   IElementType G_BRACKET_QEXPR = new GlagolElementType("G_BRACKET_QEXPR");
   IElementType G_BREAK_STMT = new GlagolElementType("G_BREAK_STMT");
   IElementType G_CAST_EXPR = new GlagolElementType("G_CAST_EXPR");
+  IElementType G_CONCAT_EXPR = new GlagolElementType("G_CONCAT_EXPR");
   IElementType G_CONSTRUCTOR = new GlagolElementType("G_CONSTRUCTOR");
   IElementType G_CONTINUE_STMT = new GlagolElementType("G_CONTINUE_STMT");
   IElementType G_DECLARATION = new GlagolElementType("G_DECLARATION");
@@ -112,6 +113,7 @@ public interface GlagolTypes {
   IElementType G_BOOLEAN = new GlagolTokenType("boolean");
   IElementType G_COLON = new GlagolTokenType(":");
   IElementType G_COMMA = new GlagolTokenType(",");
+  IElementType G_CONCAT = new GlagolTokenType("++");
   IElementType G_DECIMAL = new GlagolTokenType("decimal");
   IElementType G_DOT = new GlagolTokenType(".");
   IElementType G_DOUBLE_COLON = new GlagolTokenType("::");
@@ -226,6 +228,9 @@ public interface GlagolTypes {
       }
       else if (type == G_CAST_EXPR) {
         return new GlagolCastExprImpl(node);
+      }
+      else if (type == G_CONCAT_EXPR) {
+        return new GlagolConcatExprImpl(node);
       }
       else if (type == G_CONSTRUCTOR) {
         return new GlagolConstructorImpl(node);
