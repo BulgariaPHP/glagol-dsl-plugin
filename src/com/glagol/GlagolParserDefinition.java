@@ -35,7 +35,7 @@ public class GlagolParserDefinition implements ParserDefinition {
             GlagolTypes.G_KW_SELECT, GlagolTypes.G_KW_FROM, GlagolTypes.G_KW_WHERE, GlagolTypes.G_KW_ORDER,
             GlagolTypes.G_KW_BY, GlagolTypes.G_KW_LIMIT, GlagolTypes.G_KW_OFFSET, GlagolTypes.G_KW_AND,
             GlagolTypes.G_KW_OR, GlagolTypes.G_KW_IS, GlagolTypes.G_KW_NOT, GlagolTypes.G_KW_NULL, GlagolTypes.G_KW_ASC,
-            GlagolTypes.G_KW_DESC
+            GlagolTypes.G_KW_DESC, GlagolTypes.G_KW_PROXY, GlagolTypes.G_KW_REQUIRE
     );
 
     public static final TokenSet OPERATORS = TokenSet.create(

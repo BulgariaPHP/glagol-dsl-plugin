@@ -13,4 +13,17 @@ public class GlagolPsiElement extends ASTWrapperPsiElement {
     {
         return false;
     }
+
+    public boolean isVariable()
+    {
+        return false;
+    }
+
+    public boolean isMethod() {
+        return false;
+    }
+
+    public boolean isConstructor() {
+        return false;
+    }
 }

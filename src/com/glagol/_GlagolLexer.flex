@@ -30,7 +30,8 @@ INT=[0-9]+
 DECIMAL=[0-9]+\.[0-9]+
 SYMBOL_NAME=[A-Z][a-zA-Z_0-9]*
 BOOLEAN=true|false
-ID=[a-z][a-zA-Z]*
+ID=\\?[a-z][a-zA-Z]*
+PHP_CLASS=(\\[a-zA-Z0-9_]*)+
 STRING=('([^'\\]|\\.)*'|\"([^\"\\]|\\\"|\\'|\\)*\")
 LINE_COMMENT="//".*
 BLOCK_COMMENT="/"\*([^])*\*"/"
@@ -112,6 +113,8 @@ BLOCK_COMMENT="/"\*([^])*\*"/"
   "NULL"               { return G_KW_NULL; }
   "AND"                { return G_KW_AND; }
   "OR"                 { return G_KW_OR; }
+  "proxy"              { return G_KW_PROXY; }
+  "require"            { return G_KW_REQUIRE; }
   "string"             { return G_TYPE_STRING; }
   "int"                { return G_TYPE_INT; }
   "float"              { return G_TYPE_FLOAT; }
@@ -123,6 +126,7 @@ BLOCK_COMMENT="/"\*([^])*\*"/"
   {SYMBOL_NAME}        { return G_SYMBOL_NAME; }
   {BOOLEAN}            { return G_BOOLEAN; }
   {ID}                 { return G_ID; }
+  {PHP_CLASS}          { return G_PHP_CLASS; }
   {STRING}             { return G_STRING; }
   {LINE_COMMENT}       { return G_LINE_COMMENT; }
   {BLOCK_COMMENT}      { return G_BLOCK_COMMENT; }

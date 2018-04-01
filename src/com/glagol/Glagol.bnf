@@ -20,7 +20,8 @@
   extends(".*_expr")=expr
   extends(".*_qexpr")=qexpr
   extends(".*stmt")=stmt
-
+  implements("property|variable_expr|field_expr|parameter|invoke_final_expr|method|proxy_method|action")="com.glagol.psi.NamedElement"
+  implements("constructor|proxy_constructor")="com.glagol.psi.SymbolElement"
 
   generateTokenAccessors=true
 
@@ -101,6 +102,8 @@
     KW_NULL="NULL"
     KW_AND="AND"
     KW_OR="OR"
+    KW_PROXY="proxy"
+    KW_REQUIRE="require"
 
     TYPE_STRING="string"
     TYPE_INT="int"
@@ -112,7 +115,8 @@
     decimal="regexp:\d+\.\d+"
     SYMBOL_NAME="regexp:[A-Z]\w*"
     boolean="regexp:true|false"
-    id="regexp:[a-z][a-zA-Z]*"
+    id="regexp:\\?[a-z][a-zA-Z]*"
+    PHP_CLASS="regexp:(\\[a-zA-Z0-9_]*)+"
     string="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\\"|\\\'|\\)*\")"
     line_comment="regexp://.*"
     block_comment="regexp:/\*([^])*\*/"
@@ -125,13 +129,15 @@ qualified_name ::= SYMBOL_NAME ('::' SYMBOL_NAME)*
 
 import_artifact ::= 'import' qualified_name ('as' SYMBOL_NAME)? ';'
 
-declaration ::= annotation* (decl_entity | decl_value | decl_repo | decl_controller | decl_util)
+declaration ::= annotation* (decl_entity | decl_value | decl_repo | decl_controller | decl_util | decl_proxy)
 
 decl_entity ::= 'entity' SYMBOL_NAME '{' member* '}'
 decl_value ::= 'value' SYMBOL_NAME '{' member* '}'
 decl_repo ::= 'repository' 'for' SYMBOL_NAME '{' member* '}'
 decl_util ::= ('util' | 'service') SYMBOL_NAME '{' member* '}'
 decl_controller ::= controller_type 'controller' route '{' member* '}'
+
+decl_proxy ::= 'proxy' PHP_CLASS 'as' ('value' | 'util' | 'service') SYMBOL_NAME '{' proxy_member* '}'
 
 private controller_type ::= 'rest' | 'json-api'
 private route ::= '/' route_parts?
@@ -149,17 +155,35 @@ private annotation_arg_map ::= '[' ((annotation_arg_pair ',')* annotation_arg_pa
 private annotation_arg_pair ::= annotation_arg ':' annotation_arg
 
 member ::= annotation* (property | constructor | method | action)
+proxy_member ::= annotation* (proxy_constructor | proxy_method | proxy_require)
 
-property ::= type id ('=' property_default_value)? ';'
+property ::= type id ('=' property_default_value)? ';' {
+    methods = [isVariable]
+}
 property_default_value ::= default_value
 
-constructor ::= SYMBOL_NAME '(' abstract_parameters? ')' block_stmt guard?
+constructor ::= SYMBOL_NAME '(' abstract_parameters? ')' block_stmt guard? {
+    methods = [isConstructor]
+}
+proxy_constructor ::= SYMBOL_NAME '(' abstract_parameters? ')' ';' {
+    methods = [isConstructor]
+}
+
+proxy_require ::= 'require' string string ';'
 
 method ::= (modifier type id '(' abstract_parameters? ')' block_stmt guard?)
          | (modifier type id '(' abstract_parameters? ')' '=' expr guard)
-         | (modifier type id '(' abstract_parameters? ')' '=' expr ';')
+         | (modifier type id '(' abstract_parameters? ')' '=' expr ';') {
+    methods = [isMethod]
+}
 
-action ::= id ('(' abstract_parameters? ')')? action_body
+proxy_method ::= type id '(' abstract_parameters? ')' ';' {
+    methods = [isMethod]
+}
+
+action ::= id ('(' abstract_parameters? ')')? action_body {
+    methods = [isMethod]
+}
 private action_body ::= action_body_expr | action_body_statement
 private action_body_statement ::= block_stmt
 private action_body_expr ::= '=' expr ';'
@@ -197,7 +221,9 @@ private guard ::= 'when' expr ';'
 
 private abstract_parameters ::= (abstract_parameter ',')* abstract_parameter
 private abstract_parameter ::= annotation* parameter
-private parameter ::= type id ('=' default_value)?
+parameter ::= type id {
+  methods = [isVariable]
+}
 
 default_value ::= literal | dv_list | dv_map | get | new
 
@@ -282,9 +308,15 @@ map_pair_expr ::= expr ':' expr
 negative_expr ::= '-' expr
 positive_expr ::= '+'
 invoke_expr ::= expr '.' invoke_final_expr
-invoke_final_expr ::= id '(' seq_expr? ')'
-field_expr ::= expr '.' id
-variable_expr ::= id
+invoke_final_expr ::= id '(' seq_expr? ')' {
+    methods = [isMethod]
+}
+field_expr ::= expr '.' id {
+    methods = [isVariable]
+}
+variable_expr ::= id {
+    methods = [isVariable]
+}
 new_expr ::= 'new' SYMBOL_NAME '(' seq_expr? ')'
 bracket_expr ::= '(' expr ')'
 this_expr ::= 'this'
